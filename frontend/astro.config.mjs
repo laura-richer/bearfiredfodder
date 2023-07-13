@@ -1,13 +1,15 @@
 import { defineConfig } from 'astro/config';
 import svelte from "@astrojs/svelte";
+import vercel from '@astrojs/vercel/serverless';
+import sanity from "astro-sanity";
 
-import node from "@astrojs/node";
-
-// https://astro.build/config
 export default defineConfig({
-  integrations: [svelte()],
+  integrations: [svelte(), sanity({
+    projectId: '6f642s5x',
+    dataset: 'production',
+    apiVersion: '2023-02-08',
+    useCdn: true,
+  })],
   output: "server",
-  adapter: node({
-    mode: "standalone"
-  })
+  adapter: vercel(),
 });

@@ -10,10 +10,11 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "dependencies": {
-    "@astrojs/node": "^5.3.0",
+  "devDependencies": {
     "@astrojs/svelte": "^3.1.0",
+    "@astrojs/vercel": "^3.7.1",
     "astro": "^2.8.2",
+    "astro-sanity": "^1.1.7",
     "svelte": "^4.0.5"
   }
 }
