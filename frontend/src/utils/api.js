@@ -1,5 +1,4 @@
-import { createSanityClient } from 'astro-sanity';
-import { groq } from 'astro-sanity';
+import { createSanityClient, groq } from 'astro-sanity';
 
 export async function getHomePageContent() {
   const query = groq`*[_type == "homePageContent"`;

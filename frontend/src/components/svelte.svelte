@@ -17,3 +17,10 @@ onMount(async () => {
 <p>Testing</p>
 <p>{ homeContent }</p>
 <p>{ test }</p>
+
+
+<style lang="scss">
+  p {
+    color: blue
+  }
+</style>
