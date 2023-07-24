@@ -1,7 +1,8 @@
-import { createSanityClient, groq } from 'astro-sanity';
+import sanityClient from "../../sanity.config"
+import imageUrlBuilder from "@sanity/image-url"
 
 export async function getHomePageContent() {
-  const query = groq`*[_type == "homePageContent"`;
-  const homePageContent = await createSanityClient().fetch(query);
+  const query = `*[_type == "homePageContent"]`;
+  const homePageContent = await sanityClient.fetch(query);
   return homePageContent;
 }
