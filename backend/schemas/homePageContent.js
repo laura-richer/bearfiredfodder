@@ -81,6 +81,12 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: 'menuCopy',
+      title: 'Copy',
+      type: 'text',
+      group: 'menu',
+    }),
+    defineField({
       name: 'menuBackgroundImage',
       title: 'Background Image',
       type: 'image',
@@ -126,7 +132,7 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'socialLinks', // TODO make repeater field
+      name: 'socialLinks',
       title: 'Social Links',
       type: 'array',
       of: [
