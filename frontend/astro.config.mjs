@@ -6,4 +6,7 @@ export default defineConfig({
   integrations: [svelte()],
   output: "server",
   adapter: vercel(),
+  server: {
+    host: true
+  },
 });
