@@ -7,8 +7,8 @@ export async function getHomePageContent() {
   return homePageContent;
 }
 
-export async function getHeaderMenuItems() {
-  const query = `*[_type == "headerMenuItems"]`;
+export async function getHeaderNavItems() {
+  const query = `*[_type == "headerNavigation"]`;
   const headerMenuItems = await sanityClient.fetch(query);
   return headerMenuItems;
 }
