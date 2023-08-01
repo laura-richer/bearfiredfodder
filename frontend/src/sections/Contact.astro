@@ -1,12 +1,10 @@
-<script>
-  export let title;
-  export let contactDetails;
-  export let socialLinks;
-</script>
+---
+const { title, contactDetails, socialLinks } = Astro.props;
+---
 
-<section class="contact">
+<section id="section-4" class="contact">
   <div class="container">
-    Contact
+    <h2>{title}</h2>
   </div>
 </section>
 

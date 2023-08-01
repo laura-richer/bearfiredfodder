@@ -1,10 +1,11 @@
-<script>
-export let title;
-export let copy;
-export let image;
-</script>
+---
+const { title, copy, image } = Astro.props;
+---
 
-<section class="about">About</section>
+<section id="section-1" class="about">
+  <h2>{title}</h2>
+  <p>{copy}</p>
+</section>
 
 <style lang="scss" scoped>
 .about {

@@ -1,7 +1,43 @@
-<script>
-export let title;
-export let image;
-export let mobileImage;
-</script>
+---
+import getUrlForImage from '@/utils/getUrlForImage';
+import Button from '@/components/Button.astro';
 
-<p>Hero</p>
+const { title, image, mobileImage } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero__inner" style=`background-image: url(${getUrlForImage(image).url()})`>
+    <div class="hero__content">
+      <h1 class="hero__title">{title}</h1>
+      <Button text="See our menu" link="#section-2" />
+    </div>
+  </div>
+</section>
+
+<style lang="scss" scoped>
+@import '@/scss/container';
+
+.hero {
+  color: var(--color-white);
+  padding-top: var(--header-height);
+
+  &__inner {
+    display: flex;
+    height: 60vh;
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+  }
+
+  &__content {
+    @include container-compact;
+
+    width: 100%;
+    margin-top: 15vh;
+  }
+
+  &__title {
+    max-width: 600px;
+  }
+}
+</style>

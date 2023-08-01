@@ -1,11 +1,10 @@
-<script>
-  export let title;
-  export let images;
-</script>
+---
+const { title, images } = Astro.props
+---
 
-<section class="gallery">
+<section id="section-3" class="gallery">
   <div class="container">
-    Gallery
+    <h2>{title}</h2>
   </div>
 </section>
 

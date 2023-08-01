@@ -12,7 +12,8 @@ import Gallery from '@/sections/Gallery.astro';
 import Contact from '@/sections/Contact.astro';
 
 const formatHeaderNavItems = headerNavItems => {
-  return headerNavItems.map(item => item.name);
+  const orderedHeaderNavItems = headerNavItems.sort((a, b) => (a.order > b.order) ? 1 : -1);
+  return orderedHeaderNavItems.map(item => item.name);
 }
 
 const formatHomeContent = homeContent => {
@@ -45,13 +46,12 @@ const formatHomeContent = homeContent => {
 }
 
 const headerNavItems = await getHeaderNavItems();
-const formattedHeaderNavItems = formatHeaderNavItems(headerNavItems);
+const formattedHeaderNavItems = await formatHeaderNavItems(headerNavItems);
 
 const homeContent = await getHomePageContent();
-const formattedHomeContent = formatHomeContent(homeContent);
+const formattedHomeContent = await formatHomeContent(homeContent[0]);
 
 const menuItems = await getMenuItems();
-
 ---
 
 <html lang="en">
@@ -70,7 +70,6 @@ const menuItems = await getMenuItems();
 
     <!-- This will be a js component (svelte??) slick -->
     <Gallery {...formattedHomeContent.gallery} />
-
     <Contact {...formattedHomeContent.contact} />
   </body>
 </html>

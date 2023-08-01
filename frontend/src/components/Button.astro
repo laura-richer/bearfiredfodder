@@ -1,0 +1,24 @@
+---
+const {text, link} = Astro.props;
+---
+
+<a class="button" href={link}>
+  {text}
+</a>
+
+<style lang="scss" scoped>
+.button {
+  color: var(--color-white);
+  background-color: var(--color-red);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: var(--spacer-xs) var(--spacer-s);
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-red-dark);
+  }
+}
+</style>

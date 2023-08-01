@@ -7,13 +7,16 @@ const { headerNavItems } = Astro.props;
     <a href="/">
       <img src="/bff-logo.png" class="header__logo" alt="Bear Fired Fodder"/>
     </a>
-    <nav class="header__nav">
-      {headerNavItems.map((navItem, index) => (
-        <div>
-          <a class="header__nav-link" href="`#section-{index + 1}`">{navItem}</a>
-        </div>
-      ))}
-    </nav>
+
+    <div class="header__nav">
+      <nav class="header__nav-items">
+        {headerNavItems.map((navItem, index) => (
+          <div>
+            <a class="header__nav-link" href={`#section-${index + 1}`}>{navItem}</a>
+          </div>
+        ))}
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -22,6 +25,8 @@ const { headerNavItems } = Astro.props;
 
 .header {
   background-color: var(--color-black);
+  position: fixed;
+  width: 100%;
 
   &__container {
     display: flex;
@@ -34,14 +39,16 @@ const { headerNavItems } = Astro.props;
     height: auto;
   }
 
-  &__nav {
+  &__nav-items {
     display: flex;
     align-items: center;
     gap: var(--spacer-m);
+    height: 100%;
     font-size: 1.8rem;
     font-weight: var(--font-weight-semibold);
+  }
 
-    &-link {
+  &__nav-link {
       color: var(--color-white);
       text-decoration: none;
       position: relative;
@@ -66,6 +73,5 @@ const { headerNavItems } = Astro.props;
         }
       }
     }
-  }
 }
 </style>

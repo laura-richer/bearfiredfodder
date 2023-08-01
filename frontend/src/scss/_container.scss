@@ -1,6 +1,12 @@
 @mixin container {
-  padding: var(--spacer-s);
-  max-width: 1440px;
+  padding: var(--spacer-xs) var(--spacer-s);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+@mixin container-compact {
+  padding: 0 var(--spacer-s);
+  max-width: var(--container-compact-max-width);
   margin: 0 auto;
 }
 

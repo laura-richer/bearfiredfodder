@@ -1,0 +1,29 @@
+:root {
+  --color-red: #a40b19;
+  --color-red-dark: #71060e;
+  --color-red-alpha: #21030575;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-grey: #ebebeb;
+
+  --spacer-xs: 1.2rem;
+  --spacer-s: 2rem;
+  --spacer-m: 5rem;
+  --spacer-l: 8rem;
+  --spacer-xl: 14rem;
+
+  --container-max-width: 1440px;
+  --container-compact-max-width: 768px;
+
+  --font-family-headings: 'Adelon', 'Open Sans', arial, sans-serif;
+  --font-family-body: 'Open Sans', arial, sans-serif;
+
+  --font-weight-light: 200;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 800;
+
+  --header-height: 127px;
+
+  --breakpoint-mobile: 768px;
+}

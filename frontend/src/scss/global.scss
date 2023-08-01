@@ -1,33 +1,7 @@
-:root {
-  --color-red: #a40b19;
-  --color-red-alpha: #21030575;
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-grey: #ebebeb;
-
-  --spacer-xs: 1.2rem;
-  --spacer-s: 2rem;
-  --spacer-m: 5rem;
-  --spacer-l: 8rem;
-  --spacer-xl: 14rem;
-
-  --font-weight-light: 200;
-  --font-weight-regular: 400;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 800;
-}
+@import './_root.scss';
 
 @import './resources/fonts.scss';
 
-html {
-  font-size: 10px;
-}
-
-body {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: var(--font-weight-regular);
-  font-family: 'Open Sans', sans-serif;
-}
-
+@import './base.scss';
 @import './container.scss';
+@import './typography.scss';
