@@ -1,0 +1,12 @@
+@mixin container {
+  padding: var(--spacer-s);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.container {
+  @include container;
+
+  padding-top: var(--spacer-xl);
+  padding-bottom: var(--spacer-xl);
+}

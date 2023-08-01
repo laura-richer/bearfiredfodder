@@ -1,0 +1,71 @@
+---
+const { headerNavItems } = Astro.props;
+---
+
+<header class="header">
+  <div class="header__container">
+    <a href="/">
+      <img src="/bff-logo.png" class="header__logo" alt="Bear Fired Fodder"/>
+    </a>
+    <nav class="header__nav">
+      {headerNavItems.map((navItem, index) => (
+        <div>
+          <a class="header__nav-link" href="`#section-{index + 1}`">{navItem}</a>
+        </div>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style lang="scss" scoped>
+@import '@/scss/container';
+
+.header {
+  background-color: var(--color-black);
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    @include container;
+  }
+
+  &__logo {
+    width: 90px;
+    height: auto;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacer-m);
+    font-size: 1.8rem;
+    font-weight: var(--font-weight-semibold);
+
+    &-link {
+      color: var(--color-white);
+      text-decoration: none;
+      position: relative;
+
+      &:after {
+        position: absolute;
+        left: -1rem;
+        bottom: 0.5rem;
+        opacity: 0;
+        content: '';
+        width: calc(100% + var(--spacer-s));
+        background-color: var(--color-red);
+        height: 3px;
+        transition: all 0.3s ease;
+      }
+
+      &:hover,
+      &:focus {
+        &:after {
+          opacity: 1;
+          bottom: -1rem;
+        }
+      }
+    }
+  }
+}
+</style>

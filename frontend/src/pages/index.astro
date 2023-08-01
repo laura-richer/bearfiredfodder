@@ -1,5 +1,56 @@
 ---
-import Main from '../views/Main.svelte';
+import '@/scss/global.scss';
+// import { urlForImage } from '@/utils/urlForImage';
+import { getHomePageContent, getHeaderNavItems, getMenuItems } from '@/utils/api';
+
+import Header from '@/components/Header.astro';
+
+import Hero from '@/sections/Hero.astro';
+import About from '@/sections/About.astro';
+import Menu from '@/sections/Menu.astro';
+import Gallery from '@/sections/Gallery.astro';
+import Contact from '@/sections/Contact.astro';
+
+const formatHeaderNavItems = headerNavItems => {
+  return headerNavItems.map(item => item.name);
+}
+
+const formatHomeContent = homeContent => {
+  return {
+    hero: {
+      title: homeContent.heroTitle,
+      image: homeContent.heroImage,
+      mobileImage: homeContent.heroMobileImage
+    },
+    about: {
+      title: homeContent.aboutTitle,
+      copy: homeContent.aboutCopy,
+      image: homeContent.aboutImage,
+    },
+    menu: {
+      title: homeContent.menuTitle,
+      copy: homeContent.menuCopy,
+      backgroundImage: homeContent.menuBackgroundImage,
+    },
+    gallery: {
+      title: homeContent.galleryTitle,
+      images: homeContent.galleryImages,
+    },
+    contact: {
+      title: homeContent.contactTitle,
+      contactDetails: homeContent.contactDetails,
+      socialLinks: homeContent.socialLinks,
+    }
+  }
+}
+
+const headerNavItems = await getHeaderNavItems();
+const formattedHeaderNavItems = formatHeaderNavItems(headerNavItems);
+
+const homeContent = await getHomePageContent();
+const formattedHomeContent = formatHomeContent(homeContent);
+
+const menuItems = await getMenuItems();
 
 ---
 
@@ -12,8 +63,14 @@ import Main from '../views/Main.svelte';
 		<title>Bear Fired Fodder</title>
 	</head>
 	<body>
-  <div class="wrapper">
-    <Main client:load />
-  </div>
-</body>
+    <Header headerNavItems={formattedHeaderNavItems} />
+    <Hero {...formattedHomeContent.hero} />
+    <About {...formattedHomeContent.about} />
+    <Menu {...formattedHomeContent.menu} menuItems={menuItems} />
+
+    <!-- This will be a js component (svelte??) slick -->
+    <Gallery {...formattedHomeContent.gallery} />
+
+    <Contact {...formattedHomeContent.contact} />
+  </body>
 </html>
