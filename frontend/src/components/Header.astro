@@ -16,6 +16,12 @@ const { headerNavItems } = Astro.props;
           </div>
         ))}
       </nav>
+
+      <button class="header__nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6H20M4 12H20M4 18H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
@@ -27,11 +33,13 @@ const { headerNavItems } = Astro.props;
   background-color: var(--color-black);
   position: fixed;
   width: 100%;
+  z-index: 999;
 
   &__container {
+    @include container;
+
     display: flex;
     justify-content: space-between;
-    @include container;
   }
 
   &__logo {
@@ -39,39 +47,56 @@ const { headerNavItems } = Astro.props;
     height: auto;
   }
 
-  &__nav-items {
+  &__nav {
     display: flex;
     align-items: center;
-    gap: var(--spacer-m);
-    height: 100%;
+  }
+
+  &__nav-toggle {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__nav-items {
+    display: none;
+    @media screen and (min-width: 768px) {
+      display: flex;
+      gap: var(--spacer-m);
+    }
+
     font-size: 1.8rem;
     font-weight: var(--font-weight-semibold);
   }
 
   &__nav-link {
-      color: var(--color-white);
-      text-decoration: none;
-      position: relative;
+    color: var(--color-white);
+    text-decoration: none;
+    position: relative;
 
+    &:after {
+      position: absolute;
+      left: -1rem;
+      bottom: 0.5rem;
+      opacity: 0;
+      content: '';
+      width: calc(100% + var(--spacer-s));
+      background-color: var(--color-red);
+      height: 3px;
+      transition: all 0.3s ease;
+    }
+
+    &:hover,
+    &:focus {
       &:after {
-        position: absolute;
-        left: -1rem;
-        bottom: 0.5rem;
-        opacity: 0;
-        content: '';
-        width: calc(100% + var(--spacer-s));
-        background-color: var(--color-red);
-        height: 3px;
-        transition: all 0.3s ease;
-      }
-
-      &:hover,
-      &:focus {
-        &:after {
-          opacity: 1;
-          bottom: -1rem;
-        }
+        opacity: 1;
+        bottom: -1rem;
       }
     }
+  }
 }
 </style>

@@ -1,14 +1,82 @@
 ---
+import getUrlForImage from '@/utils/getUrlForImage';
+
 const { title, copy, image } = Astro.props;
 ---
 
 <section id="section-1" class="about">
-  <h2>{title}</h2>
-  <p>{copy}</p>
+  <div class="about__container">
+    <div class="about__content">
+      <h2 class="about__title">{ title }</h2>
+      <p class="about__copy">{ copy }</p>
+    </div>
+  </div>
+  <div class="about__image">
+    <img class="about__image-el" src={getUrlForImage(image).url()} />
+  </div>
 </section>
 
 <style lang="scss" scoped>
+@import '@/scss/container';
+
 .about {
+  position: relative;
   background-color: var(--color-grey);
+
+  &__container {
+    @include container;
+
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &__content {
+    @include container-padding;
+    @media screen and (min-width: 768px) {
+      max-width: 50%;
+      padding-right: var(--spacer-l);
+      // background: url('/images/bff-flame-mono.png') no-repeat bottom -200% right -10%;
+      // background-size: auto 90%;
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: calc(66% + 20px);
+      padding-right: var(--spacer-xl);
+    }
+  }
+
+  &__image {
+    position: relative;
+
+    @media screen and (min-width: 768px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 50%;
+
+      &:before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        left: -500px;
+        background: url('/images/bff-flame-cutoff.png');
+        z-index: 100;
+        background-color: red
+
+      }
+
+      &-el {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 33%;
+    }
+  }
 }
 </style>
