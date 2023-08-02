@@ -1,9 +1,66 @@
 ---
-const {title, copy, backgroundImage, items} = Astro.props;
+import getUrlForImage from '@/utils/getUrlForImage';
+const {title, copy, backgroundImage, menuItems} = Astro.props;
 ---
 
-<section id="section-2" class="menu">
-  <div class="container">
+<section id="section-2" class="menu" style=`background-image: url(${getUrlForImage(backgroundImage).url()})`>
+  <div class="menu__overlay"></div>
+  <div class="container menu__container">
     <h2>{title}</h2>
+    <div class="menu__content">
+      <div class="menu__copy">
+        <p>{copy}</p>
+      </div>
+      {menuItems}
+
+      <div class="menu__items">
+        <!-- {items.map(menuItem => (
+          <div class="menu__item">
+            {menuItem}
+          </div>
+        ))} -->
+      </div>
+    </div>
   </div>
 </section>
+
+<style lang="scss" scoped>
+@import '@/scss/container';
+
+.menu {
+  position: relative;
+  background: no-repeat center bottom;
+  background-size: cover;
+  color: var(--color-white);
+
+  &__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-red-alpha);
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__content {
+    display: flex;
+    gap: var(--spacer-s);
+    flex-direction: column;
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      gap: var(--spacer-l);
+    }
+  }
+
+  &__copy {
+    @media screen and (min-width: 768px) {
+      flex: 0 0 33%;
+    }
+
+  }
+}
+</style>

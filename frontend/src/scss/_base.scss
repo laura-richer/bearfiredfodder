@@ -26,6 +26,11 @@ html {
   font-family: var(--font-family-body);
   font-size: 10px;
   opacity: 1;
+  scroll-behavior: smooth;
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 
   // * Disable scroll helper class
   &.no-scroll {
