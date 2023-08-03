@@ -20,7 +20,7 @@ const { headerNavItems } = Astro.props;
       </nav>
 
       <div class="header__nav-cta">
-        <Button text="Get in touch" link="#section-4"/>
+        <Button text="Get in touch" link={`#${headerNavItems[3].link}`} />
       </div>
 
       <button id="menuToggleButton" class="header__nav-toggle" aria-label="Toggle navigation">
