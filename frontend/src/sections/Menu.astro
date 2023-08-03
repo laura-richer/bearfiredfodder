@@ -37,6 +37,14 @@ const {title, copy, backgroundImage, menuItems, id} = Astro.props;
     width: 100%;
     height: 100%;
     background-color: var(--color-red-alpha);
+
+    &:before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #00000030;
+      content: '';
+    }
   }
 
   &__container {
