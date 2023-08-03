@@ -132,10 +132,11 @@ const { headerNavItems } = Astro.props;
   }
 
   &__nav-link {
-
+    position: relative;
+    display: block;
+    width: 100%;
     color: var(--color-white);
     text-decoration: none;
-    position: relative;
 
     @media screen and (min-width: 540px) {
       &:after {
