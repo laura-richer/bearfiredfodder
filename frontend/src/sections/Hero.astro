@@ -2,19 +2,19 @@
 import getUrlForImage from '@/utils/getUrlForImage';
 import Button from '@/components/Button.astro';
 
-const { title, image, mobileImage } = Astro.props;
+const { title, image, mobileImage, menuLink } = Astro.props;
 ---
 
 <section class="hero">
   <div class="hero__inner" style=`background-image: url(${getUrlForImage(image).url()})`>
     <div class="hero__content">
       <h1 class="hero__title">{title}</h1>
-      <Button text="See our menu" link="#section-2" />
+      <Button text="See our menu" link={`#${menuLink}`} />
     </div>
   </div>
 </section>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/scss/container';
 
 .hero {

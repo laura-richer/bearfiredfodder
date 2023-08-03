@@ -13,7 +13,12 @@ import Contact from '@/sections/Contact.astro';
 
 const formatHeaderNavItems = headerNavItems => {
   const orderedHeaderNavItems = headerNavItems.sort((a, b) => (a.order > b.order) ? 1 : -1);
-  return orderedHeaderNavItems.map(item => item.name);
+  return orderedHeaderNavItems.map(item => {
+    return {
+      name: item.name,
+      link: item.name.replace(' ', '-').toLowerCase()
+    }
+  });
 }
 
 const formatHomeContent = homeContent => {
@@ -71,12 +76,18 @@ const formattedMenuItems = await formatMenuItems(menuItems);
 	</head>
 	<body>
     <Header headerNavItems={formattedHeaderNavItems} />
-    <Hero {...formattedHomeContent.hero} />
-    <About {...formattedHomeContent.about} />
-    <Menu {...formattedHomeContent.menu} menuItems={formattedMenuItems} />
+    <Hero {...formattedHomeContent.hero} menuLink={formattedHeaderNavItems[1].link} />
+    <About {...formattedHomeContent.about} id={formattedHeaderNavItems[0].link} />
+    <Menu {...formattedHomeContent.menu} id={formattedHeaderNavItems[1].link} menuItems={formattedMenuItems} />
 
     <!-- This will be a js component (svelte??) slick -->
-    <Gallery {...formattedHomeContent.gallery} />
-    <Contact {...formattedHomeContent.contact} />
+    <Gallery {...formattedHomeContent.gallery} id={formattedHeaderNavItems[2].link}/>
+    <Contact {...formattedHomeContent.contact} id={formattedHeaderNavItems[3].link}/>
   </body>
 </html>
+
+<script>
+import detectTouchevents from '@/utils/detect-touchevents';
+
+document.documentElement.classList.add(detectTouchevents() ? 'touchevents' : 'no-touchevents');
+</script>

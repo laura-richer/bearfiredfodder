@@ -6,7 +6,7 @@ const {text, link} = Astro.props;
   {text}
 </a>
 
-<style lang="scss" scoped>
+<style lang="scss" is:global>
 .button {
   color: var(--color-white);
   background-color: var(--color-red);
@@ -17,8 +17,11 @@ const {text, link} = Astro.props;
   transition: background-color 0.2s ease-in-out;
 
   &:hover,
-  &:focus {
-    background-color: var(--color-red-dark);
+  &:focus,
+  &:active {
+    .no-touchevents & {
+      background-color: var(--color-red-dark);
+    }
   }
 }
 </style>

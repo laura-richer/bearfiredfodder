@@ -1,14 +1,14 @@
 ---
-const { title, images } = Astro.props
+const { title, images, id } = Astro.props
 ---
 
-<section id="section-3" class="gallery">
+<section id={id} class="gallery">
   <div class="container">
     <h2>{title}</h2>
   </div>
 </section>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .gallery {
   background-color: var(--color-grey);
 }

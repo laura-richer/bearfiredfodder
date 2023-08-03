@@ -1,9 +1,9 @@
 ---
 import getUrlForImage from '@/utils/getUrlForImage';
-const {title, copy, backgroundImage, menuItems} = Astro.props;
+const {title, copy, backgroundImage, menuItems, id} = Astro.props;
 ---
 
-<section id="section-2" class="menu" style=`background-image: url(${getUrlForImage(backgroundImage).url()})`>
+<section id={id} class="menu" style=`background-image: url(${getUrlForImage(backgroundImage).url()})`>
   <div class="menu__overlay"></div>
   <div class="container menu__container">
     <h2>{title}</h2>
@@ -11,20 +11,19 @@ const {title, copy, backgroundImage, menuItems} = Astro.props;
       <div class="menu__copy">
         <p>{copy}</p>
       </div>
-      {menuItems}
 
       <div class="menu__items">
-        <!-- {items.map(menuItem => (
+        {menuItems.map(menuItem => (
           <div class="menu__item">
             {menuItem}
           </div>
-        ))} -->
+        ))}
       </div>
     </div>
   </div>
 </section>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/scss/container';
 
 .menu {
@@ -60,7 +59,16 @@ const {title, copy, backgroundImage, menuItems} = Astro.props;
     @media screen and (min-width: 768px) {
       flex: 0 0 33%;
     }
+  }
 
+  &__items {
+    display: grid;
+    gap: var(--spacer-s);
+
+    @media screen and (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacer-l);
+    }
   }
 }
 </style>

@@ -1,15 +1,18 @@
 ---
-const { title, contactDetails, socialLinks } = Astro.props;
+const { title, contactDetails, socialLinks, id } = Astro.props;
 ---
 
-<section id="section-4" class="contact">
+<section id={id} class="contact">
   <div class="container">
     <h2>{title}</h2>
+    {JSON.stringify(contactDetails)}
+    {JSON.stringify(socialLinks)}
   </div>
 </section>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .contact {
   background-color: var(--color-black);
+  color: var(--color-white);
 }
 </style>
