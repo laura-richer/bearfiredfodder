@@ -1,10 +1,8 @@
 ---
 import '@/scss/global.scss';
-// import { urlForImage } from '@/utils/urlForImage';
 import { getHomePageContent, getHeaderNavItems, getMenuItems } from '@/utils/api';
 
 import Header from '@/components/Header.astro';
-
 import Hero from '@/sections/Hero.astro';
 import About from '@/sections/About.astro';
 import Menu from '@/sections/Menu.astro';
@@ -50,12 +48,6 @@ const formatHomeContent = homeContent => {
   }
 }
 
-const formatMenuItems = menuItems => {
-  return menuItems.map(item => {
-    return JSON.stringify(item);
-  })
-}
-
 const headerNavItems = await getHeaderNavItems();
 const formattedHeaderNavItems = await formatHeaderNavItems(headerNavItems);
 
@@ -63,7 +55,6 @@ const homeContent = await getHomePageContent();
 const formattedHomeContent = await formatHomeContent(homeContent[0]);
 
 const menuItems = await getMenuItems();
-const formattedMenuItems = await formatMenuItems(menuItems);
 ---
 
 <html lang="en">
@@ -78,7 +69,7 @@ const formattedMenuItems = await formatMenuItems(menuItems);
     <Header headerNavItems={formattedHeaderNavItems} />
     <Hero {...formattedHomeContent.hero} menuLink={formattedHeaderNavItems[1].link} />
     <About {...formattedHomeContent.about} id={formattedHeaderNavItems[0].link} />
-    <Menu {...formattedHomeContent.menu} id={formattedHeaderNavItems[1].link} menuItems={formattedMenuItems} />
+    <Menu {...formattedHomeContent.menu} id={formattedHeaderNavItems[1].link} menuItems={menuItems} />
 
     <!-- This will be a js component (svelte??) slick -->
     <Gallery {...formattedHomeContent.gallery} id={formattedHeaderNavItems[2].link}/>

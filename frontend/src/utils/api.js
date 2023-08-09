@@ -13,7 +13,7 @@ export async function getHeaderNavItems() {
 export async function getMenuItems() {
   const query = `*[_type == "menuItem"]{
     title,
-    "ingredients": ingredient[]->name,
+    "ingredients": ingredient->name,
     "dietaryRequirements": dietaryRequirement[]->name
   }`;
   return sanityClient.fetch(query);

@@ -1,6 +1,6 @@
 ---
 import getUrlForImage from '@/utils/getUrlForImage';
-const {title, copy, backgroundImage, menuItems, id} = Astro.props;
+const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 ---
 
 <section id={id} class="menu" style=`background-image: url(${getUrlForImage(backgroundImage).url()})`>
@@ -15,7 +15,11 @@ const {title, copy, backgroundImage, menuItems, id} = Astro.props;
       <div class="menu__items">
         {menuItems.map(menuItem => (
           <div class="menu__item">
-            {menuItem}
+            <h3>{menuItem.title}</h3>
+            {menuItem.ingredients}
+            {menuItem.ingredients?.length > 0 &&
+              <p>{menuItem.ingredients}</p>
+            }
           </div>
         ))}
       </div>
@@ -74,6 +78,7 @@ const {title, copy, backgroundImage, menuItems, id} = Astro.props;
     gap: var(--spacer-s);
 
     @media screen and (min-width: 768px) {
+      flex-grow: 1;
       grid-template-columns: 1fr 1fr;
       gap: var(--spacer-l);
     }
