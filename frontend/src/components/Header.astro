@@ -7,16 +7,20 @@ const { headerNavItems } = Astro.props;
 <header class="header">
   <div class="header__container">
     <a href="#">
-      <img src="/bff-logo.png" class="header__logo" alt="Bear Fired Fodder"/>
+      <img src="/bff-logo.png" class="header__logo" alt="Bear Fired Fodder" />
     </a>
 
     <div class="header__nav">
       <nav class="header__nav-items" id="header__nav-items">
-        {headerNavItems.map(navItem => (
-          <div class="header__nav-item">
-            <a class="header__nav-link" href={`#${navItem.link}`}>{navItem.name}</a>
-          </div>
-        ))}
+        {
+          headerNavItems.map(navItem => (
+            <div class="header__nav-item">
+              <a class="header__nav-link" href={`#${navItem.link}`}>
+                {navItem.name}
+              </a>
+            </div>
+          ))
+        }
       </nav>
 
       <div class="header__nav-cta">
@@ -25,7 +29,12 @@ const { headerNavItems } = Astro.props;
 
       <button id="menuToggleButton" class="header__nav-toggle" aria-label="Toggle navigation">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M4 6H20M4 12H20M4 18H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M4 6H20M4 12H20M4 18H20"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
       </button>
     </div>
@@ -33,140 +42,142 @@ const { headerNavItems } = Astro.props;
 </header>
 
 <script>
-  const menuButton = document.getElementById("menuToggleButton");
-  const headerNavItemsContainer = document.getElementById("header__nav-items");
-  const headerNavItems = document.querySelectorAll(".header__nav-item");
+  const menuButton = document.querySelector('#menuToggleButton');
+  const headerNavItemsContainer = document.querySelector('#header__nav-items');
+  const headerNavItems = document.querySelectorAll('.header__nav-item');
 
   const handleMenuToggle = () => {
     menuButton.classList.toggle('header__nav-toggle--active');
     headerNavItemsContainer.classList.toggle('header__nav-items--active');
-  }
+  };
 
   const handleMenuClose = () => {
     menuButton.classList.remove('header__nav-toggle--active');
     headerNavItemsContainer.classList.remove('header__nav-items--active');
-  }
+  };
 
-  headerNavItems.forEach((item) => {
-    item.addEventListener("click", handleMenuClose);
+  headerNavItems.forEach(item => {
+    item.addEventListener('click', handleMenuClose);
   });
-  menuButton.addEventListener("click", handleMenuToggle);
+  menuButton.addEventListener('click', handleMenuToggle);
 </script>
 
 <style lang="scss">
-@import '@/scss/container';
+  @import '@/scss/container';
 
-.header {
-  background-color: var(--color-black);
-  position: fixed;
-  width: 100%;
-  z-index: 999;
-
-  &__container {
-    @include container;
-
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__logo {
-    width: 90px;
-    height: auto;
-  }
-
-  &__nav {
-    display: flex;
-    align-items: center;
-  }
-
-  &__nav-toggle {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    @media screen and (min-width: 540px) {
-      display: none;
-    }
-  }
-
-  &__nav-items {
-    display: block;
-
-    @media screen and (max-width: 539px) {
-      position: absolute;
-      top: var(--header-height);
-      left: 0;
-      width: 100vw;
-      max-height: 0;
-      overflow: hidden;
-      background-color: var(--color-black);
-      transition: max-height 0.3s ease;
-      &--active {
-        max-height: 300px;
-      }
-    }
-
-    @media screen and (min-width: 540px) {
-      display: flex;
-      gap: var(--spacer-m);
-    }
-
-    font-size: 1.8rem;
-    font-weight: var(--font-weight-semibold);
-  }
-
-  &__nav-item {
-    padding: var(--spacer-s) 3rem;
-
-    &:first-child {
-      padding-top: 3rem;
-    }
-
-    &:last-child {
-      padding-bottom: 3rem;
-    }
-
-    @media screen and (min-width: 540px) {
-      padding: 0 !important;
-    }
-  }
-
-  &__nav-link {
-    position: relative;
-    display: block;
+  .header {
+    background-color: var(--color-black);
+    position: fixed;
     width: 100%;
-    color: var(--color-white);
-    text-decoration: none;
+    z-index: 999;
 
-    @media screen and (min-width: 540px) {
-      &:after {
+    &__container {
+      @include container;
+
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__logo {
+      width: 90px;
+      height: auto;
+    }
+
+    &__nav {
+      display: flex;
+      align-items: center;
+    }
+
+    &__nav-toggle {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      @media screen and (min-width: 540px) {
+        display: none;
+      }
+    }
+
+    &__nav-items {
+      display: block;
+
+      @media screen and (max-width: 539px) {
         position: absolute;
-        left: -1rem;
-        bottom: 0.5rem;
-        opacity: 0;
-        content: '';
-        width: calc(100% + var(--spacer-s));
-        background-color: var(--color-red);
-        height: 3px;
-        transition: all 0.3s ease;
+        top: var(--header-height);
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - var(--header-height));
+        overflow: hidden;
+        background-color: var(--color-black);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+
+        &--active {
+          transform: translateX(0);
+        }
       }
 
-      &:hover,
-      &:focus {
+      @media screen and (min-width: 540px) {
+        display: flex;
+        gap: var(--spacer-m);
+      }
+
+      font-size: 1.8rem;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    &__nav-item {
+      padding: var(--spacer-s) 3rem;
+
+      &:first-child {
+        padding-top: 3rem;
+      }
+
+      &:last-child {
+        padding-bottom: 3rem;
+      }
+
+      @media screen and (min-width: 540px) {
+        padding: 0 !important;
+      }
+    }
+
+    &__nav-link {
+      position: relative;
+      display: block;
+      width: 100%;
+      color: var(--color-white);
+      text-decoration: none;
+
+      @media screen and (min-width: 540px) {
         &:after {
-          opacity: 1;
-          bottom: -1rem;
+          position: absolute;
+          left: -1rem;
+          bottom: 0.5rem;
+          opacity: 0;
+          content: '';
+          width: calc(100% + var(--spacer-s));
+          background-color: var(--color-red);
+          height: 3px;
+          transition: all 0.3s ease;
+        }
+
+        &:hover,
+        &:focus {
+          &:after {
+            opacity: 1;
+            bottom: -1rem;
+          }
         }
       }
     }
-  }
 
-  &__nav-cta {
-    margin-right: var(--spacer-s);
+    &__nav-cta {
+      margin-right: var(--spacer-s);
 
-    @media screen and (min-width: 540px) {
-      display: none;
+      @media screen and (min-width: 540px) {
+        display: none;
+      }
     }
   }
-}
 </style>

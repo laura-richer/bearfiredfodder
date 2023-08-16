@@ -10,21 +10,21 @@ import Gallery from '@/sections/Gallery.astro';
 import Contact from '@/sections/Contact.astro';
 
 const formatHeaderNavItems = headerNavItems => {
-  const orderedHeaderNavItems = headerNavItems.sort((a, b) => (a.order > b.order) ? 1 : -1);
+  const orderedHeaderNavItems = headerNavItems.sort((a, b) => (a.order > b.order ? 1 : -1));
   return orderedHeaderNavItems.map(item => {
     return {
       name: item.name,
-      link: item.name.replace(' ', '-').toLowerCase()
-    }
+      link: item.name.replace(' ', '-').toLowerCase(),
+    };
   });
-}
+};
 
 const formatHomeContent = homeContent => {
   return {
     hero: {
       title: homeContent.heroTitle,
       image: homeContent.heroImage,
-      mobileImage: homeContent.heroMobileImage
+      mobileImage: homeContent.heroMobileImage,
     },
     about: {
       title: homeContent.aboutTitle,
@@ -44,9 +44,9 @@ const formatHomeContent = homeContent => {
       title: homeContent.contactTitle,
       contactDetails: homeContent.contactDetails,
       socialLinks: homeContent.socialLinks,
-    }
-  }
-}
+    },
+  };
+};
 
 const headerNavItems = await getHeaderNavItems();
 const formattedHeaderNavItems = await formatHeaderNavItems(headerNavItems);
@@ -58,27 +58,31 @@ const menuItems = await getMenuItems();
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Bear Fired Fodder</title>
-	</head>
-	<body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Bear Fired Fodder</title>
+  </head>
+  <body>
     <Header headerNavItems={formattedHeaderNavItems} />
     <Hero {...formattedHomeContent.hero} menuLink={formattedHeaderNavItems[1].link} />
     <About {...formattedHomeContent.about} id={formattedHeaderNavItems[0].link} />
-    <Menu {...formattedHomeContent.menu} id={formattedHeaderNavItems[1].link} menuItems={menuItems} />
+    <Menu
+      {...formattedHomeContent.menu}
+      id={formattedHeaderNavItems[1].link}
+      menuItems={menuItems}
+    />
 
     <!-- This will be a js component (svelte??) slick -->
-    <Gallery {...formattedHomeContent.gallery} id={formattedHeaderNavItems[2].link}/>
-    <Contact {...formattedHomeContent.contact} id={formattedHeaderNavItems[3].link}/>
+    <Gallery {...formattedHomeContent.gallery} id={formattedHeaderNavItems[2].link} />
+    <Contact {...formattedHomeContent.contact} id={formattedHeaderNavItems[3].link} />
   </body>
 </html>
 
 <script>
-import detectTouchevents from '@/utils/detect-touchevents';
+  import detectTouchevents from '@/utils/detect-touchevents';
 
-document.documentElement.classList.add(detectTouchevents() ? 'touchevents' : 'no-touchevents');
+  document.documentElement.classList.add(detectTouchevents() ? 'touchevents' : 'no-touchevents');
 </script>

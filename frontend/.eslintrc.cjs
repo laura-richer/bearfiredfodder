@@ -1,37 +1,6 @@
 const path = require('node:path');
 
 module.exports = {
-  env: {
-    browser: true,
-  },
-  globals: {
-    Drupal: true,
-    drupalSettings: true,
-  },
-  extends: [
-    'airbnb-base',
-    'eslint:recommended',
-    'plugin:github/recommended',
-    'plugin:prettier/recommended',
-    'plugin:sonarjs/recommended',
-    'plugin:unicorn/recommended',
-    'prettier',
-    'plugin:astro/recommended',
-  ],
-  overrides: [
-    {
-      files: ['*.astro'],
-      parser: 'astro-eslint-parser',
-    },
-  ],
-  parserOptions: {
-    parser: '@babel/eslint-parser',
-    ecmaVersion: 8,
-    extends: 'airbnb-base',
-    requireConfigFile: false,
-    sourceType: 'module',
-    extraFileExtensions: ['.astro'],
-  },
   settings: {
     'import/resolver': {
       alias: {
@@ -39,13 +8,42 @@ module.exports = {
           ['@/', path.resolve(__dirname, 'src')],
           ['~', path.resolve(__dirname, '/')],
         ],
-        extensions: ['.astro'],
+        // extensions: ['.astro'],
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx', '.astro'],
+        },
       },
     },
   },
-  plugins: ['github', 'sonarjs'],
+  extends: [
+    'plugin:astro/recommended',
+    'airbnb-base',
+    'eslint:recommended',
+    'plugin:compat/recommended',
+    'plugin:github/recommended',
+    'plugin:prettier/recommended',
+    'plugin:sonarjs/recommended',
+    'plugin:unicorn/recommended',
+    'prettier',
+  ],
+  plugins: ['astro', 'prettier', 'sonarjs', 'unicorn', 'github'],
+  // parserOptions: {
+  //   parser: '@babel/eslint-parser',
+  //   ecmaVersion: 'latest',
+  //   extends: 'airbnb-base',
+  //   requireConfigFile: false,
+  //   sourceType: 'module',
+  // },
+  ignorePatterns: ['/scss/*', '/assets/*'],
+  overrides: [
+    {
+      files: ['*.astro'],
+      parser: 'astro-eslint-parser',
+    },
+  ],
   rules: {
     'i18n-text/no-en': 0,
+    'compat/compat': ['warn'],
     'eslint-comments/no-use': ['warn', { allow: ['eslint-disable-next-line'] }],
     'filenames/match-regex': 0,
     'github/array-foreach': 0,
@@ -78,6 +76,7 @@ module.exports = {
           src: false,
           req: false,
           res: false,
+          prop: false,
         },
       },
     ],

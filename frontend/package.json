@@ -11,21 +11,23 @@
     "astro": "astro",
     "stylelint": "stylelint '**/*.{scss,astro, astrojs}' && exit 0",
     "stylelint:fix": "stylelint --fix '**/*.{scss,astro, astrojs}' && exit 0",
-    "eslint": "eslint './src/**/*.{js,astro, astrojs}' && exit 0",
+    "eslint": "eslint src/**/*.{js,astro}",
     "eslint:fix": "eslint --fix './src/**/*.{js,astro, astrojs}' && exit 0"
   },
   "devDependencies": {
     "@astrojs/vercel": "^3.7.1",
-    "@babel/eslint-parser": "^7.22.9",
+    "@babel/eslint-parser": "^7.22.10",
     "astro": "^2.8.2",
     "detect-browser": "^5.3.0",
-    "eslint": "^8.46.0",
+    "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.9.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-astro": "^0.28.0",
     "eslint-plugin-compat": "^4.1.4",
     "eslint-plugin-github": "^4.9.2",
     "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-sonarjs": "^0.19.0",
     "eslint-plugin-unicorn": "^48.0.1",
@@ -36,6 +38,7 @@
   },
   "dependencies": {
     "@sanity/client": "^6.1.7",
-    "@sanity/image-url": "^1.0.2"
+    "@sanity/image-url": "^1.0.2",
+    "swiper": "^10.1.0"
   }
 }

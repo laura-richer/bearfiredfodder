@@ -15,29 +15,29 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 </section>
 
 <style lang="scss">
-@import '@/scss/container';
+  @import '@/scss/container';
 
-.hero {
-  color: var(--color-white);
-  padding-top: var(--header-height);
+  .hero {
+    color: var(--color-white);
+    padding-top: var(--header-height);
 
-  &__inner {
-    display: flex;
-    height: 60vh;
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
+    &__inner {
+      display: flex;
+      height: 60vh;
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+
+    &__content {
+      @include container-compact;
+
+      width: 100%;
+      margin-top: 15vh;
+    }
+
+    &__title {
+      max-width: 600px;
+    }
   }
-
-  &__content {
-    @include container-compact;
-
-    width: 100%;
-    margin-top: 15vh;
-  }
-
-  &__title {
-    max-width: 600px;
-  }
-}
 </style>

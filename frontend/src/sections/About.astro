@@ -7,8 +7,8 @@ const { title, copy, image, id } = Astro.props;
 <section id={id} class="about">
   <div class="about__container">
     <div class="about__content">
-      <h2 class="about__title">{ title }</h2>
-      <p class="about__copy">{ copy }</p>
+      <h2 class="about__title">{title}</h2>
+      <p class="about__copy">{copy}</p>
     </div>
   </div>
   <div class="about__image">
@@ -17,87 +17,86 @@ const { title, copy, image, id } = Astro.props;
 </section>
 
 <style lang="scss">
-@import '@/scss/container';
+  @import '@/scss/container';
 
-.about {
-  position: relative;
-  background-color: var(--color-grey);
-
-  &__container {
-    @include container;
-
+  .about {
     position: relative;
-    z-index: 100;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+    background-color: var(--color-grey);
 
-  &__content {
-    @include container-padding;
-    @media screen and (min-width: 768px) {
-      max-width: 50%;
-      padding-right: var(--spacer-l);
+    &__container {
+      @include container;
+
+      position: relative;
+      z-index: 100;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
-    @media screen and (min-width: 1024px) {
-      max-width: calc(66% + 20px);
-      padding-right: var(--spacer-xl);
-    }
-  }
+    &__content {
+      @include container-padding;
+      @media screen and (min-width: 768px) {
+        max-width: 50%;
+        padding-right: var(--spacer-l);
+      }
 
-  &__image {
-    position: relative;
-
-    &:before {
-      position: absolute;
-      top: -50%;
-      bottom: 0;
-      z-index: 99;
-      width: 100%;
-      height: 50%;
-      max-height: 100%;
-      background: url('/images/bff-flame-cutoff-about.png') no-repeat bottom right;
-      background-size: auto 100%;
-      content: '';
-
-    }
-
-    @media screen and (min-width: 540px) {
-      &:before {
-        height: 25%;
-        top: -25%;
+      @media screen and (min-width: 1024px) {
+        max-width: calc(66% + 20px);
+        padding-right: var(--spacer-xl);
       }
     }
 
-    @media screen and (min-width: 768px) {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 50;
-      width: 50%;
+    &__image {
+      position: relative;
 
       &:before {
+        position: absolute;
+        top: -50%;
+        bottom: 0;
+        z-index: 99;
         width: 100%;
         height: 50%;
-        top: auto;
-        left: -100%;
+        max-height: 100%;
+        background: url('/images/bff-flame-cutoff-about.png') no-repeat bottom right;
+        background-size: auto 100%;
+        content: '';
       }
 
-      &-el {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
+      @media screen and (min-width: 540px) {
+        &:before {
+          height: 25%;
+          top: -25%;
+        }
       }
-    }
 
-    @media screen and (min-width: 1024px) {
-      width: 33%;
+      @media screen and (min-width: 768px) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 50%;
 
-      &:before {
-        height: 75%;
+        &:before {
+          width: 100%;
+          height: 50%;
+          top: auto;
+          left: -100%;
+        }
+
+        &-el {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        width: 33%;
+
+        &:before {
+          height: 75%;
+        }
       }
     }
   }
-}
 </style>

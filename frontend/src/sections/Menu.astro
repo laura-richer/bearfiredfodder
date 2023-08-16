@@ -1,9 +1,14 @@
 ---
 import getUrlForImage from '@/utils/getUrlForImage';
+
 const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 ---
 
-<section id={id} class="menu" style=`background-image: url(${getUrlForImage(backgroundImage).url()})`>
+<section
+  id={id}
+  class="menu"
+  style=`background-image: url(${getUrlForImage(backgroundImage).url()})`
+>
   <div class="menu__overlay"></div>
   <div class="container menu__container">
     <h2>{title}</h2>
@@ -13,75 +18,76 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
       </div>
 
       <div class="menu__items">
-        {menuItems.map(menuItem => (
-          <div class="menu__item">
-            <h3>{menuItem.title}</h3>
-            {menuItem.ingredients}
-            {menuItem.ingredients?.length > 0 &&
-              <p>{menuItem.ingredients}</p>
-            }
-          </div>
-        ))}
+        {
+          menuItems.map(menuItem => (
+            <div class="menu__item">
+              {menuItem}
+              <h3>{menuItem.title}</h3>
+              {menuItem.ingredients}
+              {menuItem.ingredients?.length > 0 && <p>{menuItem.ingredients}</p>}
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>
 </section>
 
 <style lang="scss">
-@import '@/scss/container';
+  @import '@/scss/container';
 
-.menu {
-  position: relative;
-  background: no-repeat center bottom;
-  background-size: cover;
-  color: var(--color-white);
+  .menu {
+    position: relative;
+    background: no-repeat center bottom;
+    background-size: cover;
+    color: var(--color-white);
 
-  &__overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-red-alpha);
-
-    &:before {
+    &__overlay {
       position: absolute;
       width: 100%;
       height: 100%;
-      background-color: #00000030;
-      content: '';
+      background-color: var(--color-red-alpha);
+
+      &:before {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #00000030;
+        content: '';
+      }
+    }
+
+    &__container {
+      position: relative;
+      z-index: 1;
+    }
+
+    &__content {
+      display: flex;
+      gap: var(--spacer-s);
+      flex-direction: column;
+
+      @media screen and (min-width: 768px) {
+        flex-direction: row;
+        gap: var(--spacer-l);
+      }
+    }
+
+    &__copy {
+      @media screen and (min-width: 768px) {
+        flex: 0 0 33%;
+      }
+    }
+
+    &__items {
+      display: grid;
+      gap: var(--spacer-s);
+
+      @media screen and (min-width: 768px) {
+        flex-grow: 1;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacer-l);
+      }
     }
   }
-
-  &__container {
-    position: relative;
-    z-index: 1;
-  }
-
-  &__content {
-    display: flex;
-    gap: var(--spacer-s);
-    flex-direction: column;
-
-    @media screen and (min-width: 768px) {
-      flex-direction: row;
-      gap: var(--spacer-l);
-    }
-  }
-
-  &__copy {
-    @media screen and (min-width: 768px) {
-      flex: 0 0 33%;
-    }
-  }
-
-  &__items {
-    display: grid;
-    gap: var(--spacer-s);
-
-    @media screen and (min-width: 768px) {
-      flex-grow: 1;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacer-l);
-    }
-  }
-}
 </style>
