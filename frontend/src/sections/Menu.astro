@@ -21,10 +21,17 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
         {
           menuItems.map(menuItem => (
             <div class="menu__item">
-              {menuItem}
-              <h3>{menuItem.title}</h3>
-              {menuItem.ingredients}
-              {menuItem.ingredients?.length > 0 && <p>{menuItem.ingredients}</p>}
+              <h3>
+                {menuItem.title}
+                {menuItem.dietaryRequirements?.length > 0 && (
+                  <span class="menu__item-dietary-requirements">
+                    ({menuItem.dietaryRequirements.join(', ')})
+                  </span>
+                )}
+              </h3>
+              {menuItem.ingredients?.length > 0 && (
+                <p class="menu__item-ingredients">{menuItem.ingredients.join(', ')}</p>
+              )}
             </div>
           ))
         }
@@ -64,7 +71,7 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 
     &__content {
       display: flex;
-      gap: var(--spacer-s);
+      gap: var(--spacer-m);
       flex-direction: column;
 
       @media screen and (min-width: 768px) {
@@ -81,12 +88,27 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 
     &__items {
       display: grid;
-      gap: var(--spacer-s);
+      gap: var(--spacer-m);
 
       @media screen and (min-width: 768px) {
         flex-grow: 1;
         grid-template-columns: 1fr 1fr;
-        gap: var(--spacer-l);
+        // gap: var(--spacer-l);
+      }
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacer-s);
+
+      &-dietary-requirements {
+        font-size: 2rem;
+      }
+
+      &-ingredients {
+        font-size: 1.8rem;
+        font-weight: 200;
       }
     }
   }

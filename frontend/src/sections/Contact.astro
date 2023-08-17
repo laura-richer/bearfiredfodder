@@ -1,10 +1,15 @@
 ---
+import Instagram from '@/icons/Instagram.astro';
+import Email from '@/icons/Email.astro';
+
 const { title, contactDetails, socialLinks, id } = Astro.props;
 ---
 
 <section id={id} class="contact">
   <div class="container">
     <h2>{title}</h2>
+    <Instagram />
+    <Email />
     {JSON.stringify(contactDetails)}
     {JSON.stringify(socialLinks)}
   </div>

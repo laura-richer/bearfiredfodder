@@ -9,12 +9,14 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'ingredient',
       title: 'Ingredients',
       type: 'array',
       of: [{type: 'reference', to: {type: 'ingredient'}}],
+      validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'dietaryRequirement',
