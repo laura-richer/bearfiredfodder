@@ -56,8 +56,9 @@ const { headerNavItems } = Astro.props;
   menuButton.addEventListener('click', handleMenuToggle);
 </script>
 
-<style lang="scss">
-  @import '@/scss/container';
+<style lang="scss" is:global>
+  @import '@/scss/resources/container';
+  @import '@/scss/resources/hover-state';
 
   .header {
     background-color: var(--color-black);
@@ -137,33 +138,13 @@ const { headerNavItems } = Astro.props;
     }
 
     &__nav-link {
+      @include hover-state;
+
       position: relative;
       display: block;
       width: 100%;
       color: var(--color-white);
       text-decoration: none;
-
-      @media screen and (min-width: 540px) {
-        &:after {
-          position: absolute;
-          left: -1rem;
-          bottom: 0.5rem;
-          opacity: 0;
-          content: '';
-          width: calc(100% + var(--spacer-s));
-          background-color: var(--color-red);
-          height: 3px;
-          transition: all 0.3s ease;
-        }
-
-        &:hover,
-        &:focus {
-          &:after {
-            opacity: 1;
-            bottom: -1rem;
-          }
-        }
-      }
     }
 
     &__nav-cta {

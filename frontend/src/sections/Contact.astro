@@ -1,16 +1,24 @@
 ---
 import ContactItem from '@/components/ContactItem.astro';
 
-const { title, phoneNumber, emailAddress, instagram, id } = Astro.props;
+const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } = Astro.props;
 ---
 
 <section id={id} class="contact">
-  <div class="container">
+  <div class="container contact__container">
     <h2>{title}</h2>
     <div class="contact__details">
-      {phoneNumber && <ContactItem icon={'Phone'} contact={phoneNumber} />}
-      {emailAddress && <ContactItem icon={'Email'} contact={emailAddress} />}
-      {instagram && <ContactItem icon={'Instagram'} contact={instagram} />}
+      {phoneNumber && <ContactItem icon={'Phone'} copy={phoneNumber} url={`tel:${phoneNumber}`} />}
+      {
+        emailAddress && (
+          <ContactItem icon={'Email'} copy={emailAddress} url={`mailto:${emailAddress}`} />
+        )
+      }
+      {
+        instagramHandle && (
+          <ContactItem icon={'Instagram'} copy={instagramHandle} url={instagramLink} />
+        )
+      }
     </div>
   </div>
 </section>
@@ -19,5 +27,16 @@ const { title, phoneNumber, emailAddress, instagram, id } = Astro.props;
   .contact {
     background-color: var(--color-black);
     color: var(--color-white);
+
+    &__container {
+      padding-top: var(--spacer-m);
+      padding-bottom: var(--spacer-m);
+    }
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacer-xs);
+    }
   }
 </style>

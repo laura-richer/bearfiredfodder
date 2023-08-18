@@ -44,7 +44,8 @@ const formatHomeContent = homeContent => {
       title: homeContent.contactTitle,
       phoneNumber: homeContent.phoneNumber,
       emailAddress: homeContent.emailAddress,
-      instagram: homeContent.instagramLink,
+      instagramHandle: `@${homeContent.instagramHandle}`,
+      instagramLink: `https://www.instagram.com/${homeContent.instagramHandle}/`,
     },
     seo: {
       metaTitle: homeContent.metaTitle,

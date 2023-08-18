@@ -129,8 +129,8 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'instagramLink',
-      title: 'Instagram',
+      name: 'instagramHandle',
+      title: 'Instagram Handle',
       type: 'string',
       group: 'contact',
     }),
