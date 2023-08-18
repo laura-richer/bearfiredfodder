@@ -1,9 +1,16 @@
 ---
 const { icon, contact } = Astro.props;
+
+const getFilenameFromPath = path => /[^/]*$/.exec(path)[0];
+
+const icons = await Astro.glob('../icons/contact/*.astro');
+const requiredIcon = icons.find(
+  currentIcon => getFilenameFromPath(currentIcon.file) === `${icon}.astro`
+);
 ---
 
 <div class="contact-item">
-  <span>{icon}</span>
+  <span><requiredIcon.default /></span>
   <span>{contact}</span>
 </div>
 
