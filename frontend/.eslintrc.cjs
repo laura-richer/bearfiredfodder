@@ -1,22 +1,7 @@
-const path = require('node:path');
-
 module.exports = {
-  settings: {
-    'import/resolver': {
-      alias: {
-        map: [
-          ['@/', path.resolve(__dirname, 'src')],
-          ['~', path.resolve(__dirname, '/')],
-        ],
-        // extensions: ['.astro'],
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.astro'],
-        },
-      },
-    },
-  },
   extends: [
     'plugin:astro/recommended',
+    'plugin:import/recommended',
     'airbnb-base',
     'eslint:recommended',
     'plugin:compat/recommended',
@@ -34,6 +19,17 @@ module.exports = {
   //   requireConfigFile: false,
   //   sourceType: 'module',
   // },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@/', './src/'],
+          ['~', './'],
+        ],
+        extensions: ['.astro', '.js', '.jsx', '.json'],
+      },
+    },
+  },
   ignorePatterns: ['/scss/*', '/assets/*'],
   overrides: [
     {

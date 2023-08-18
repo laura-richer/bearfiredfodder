@@ -42,8 +42,13 @@ const formatHomeContent = homeContent => {
     },
     contact: {
       title: homeContent.contactTitle,
-      contactDetails: homeContent.contactDetails,
-      socialLinks: homeContent.socialLinks,
+      phoneNumber: homeContent.phoneNumber,
+      emailAddress: homeContent.emailAddress,
+      instagram: homeContent.instagramLink,
+    },
+    seo: {
+      metaTitle: homeContent.metaTitle,
+      metaDescription: homeContent.metaDescription,
     },
   };
 };
@@ -63,7 +68,8 @@ const menuItems = await getMenuItems();
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Bear Fired Fodder</title>
+    <meta name="description" content={formattedHomeContent.seo.metaDescription} />
+    <title>{formattedHomeContent.seo.metaTitle}</title>
   </head>
   <body>
     <Header headerNavItems={formattedHeaderNavItems} />

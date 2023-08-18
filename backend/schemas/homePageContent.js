@@ -115,36 +115,23 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'contactDetails',
-      title: 'Contact Details',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'contactDetailsFieldGroup',
-          fields: [
-            { type: 'string', name: 'contactDetailsType', title: 'Contact Type' },
-            { type: 'text', name: 'contactDetailsDetail', title: 'Details' }
-          ]
-        }
-      ],
+      name: 'phoneNumber',
+      title: 'Phone Number',
+      type: 'string',
       group: 'contact',
       validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'socialLinks',
-      title: 'Social Links',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'socialLinksFieldGroup',
-          fields: [
-            { type: 'string', name: 'socialPlatform', title: 'Platform' },
-            { type: 'url', name: 'socialLink', title: 'Link' }
-          ]
-        }
-      ],
+      name: 'emailAddress',
+      title: 'Email Address',
+      type: 'string',
+      group: 'contact',
+      validation: Rule => Rule.required(),
+    }),
+    defineField({
+      name: 'instagramLink',
+      title: 'Instagram',
+      type: 'string',
       group: 'contact',
     }),
     defineField({
@@ -152,12 +139,14 @@ export default defineType({
       title: 'Meta Title',
       type: 'string',
       group: 'seo',
+      validation: Rule => Rule.max(60),
     }),
     defineField({
       name: 'metaDescription',
       title: 'Meta Description',
       type: 'string',
       group: 'seo',
+      validation: Rule => Rule.max(160),
     })
   ],
 })
