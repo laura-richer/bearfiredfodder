@@ -1,9 +1,12 @@
 import sanityClient from '@sanity/client';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // TODO tokenise API
 export default sanityClient({
-  projectId: import.meta.env.PROJECT_ID,
+  projectId: process.env.PROJECT_ID,
   dataset: 'production',
   useCdn: true,
-  token: import.meta.env.API_TOKEN,
+  token: process.env.API_TOKEN,
 });
