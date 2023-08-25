@@ -1,49 +1,50 @@
 ---
-import getUrlForImage from '@/utils/getUrlForImage';
+// import Swiper from 'swiper';
+// import { Navigation } from 'swiper/modules';
+// import 'swiper/css';
 
 const { title, images, id } = Astro.props;
+
+// const swiper = new Swiper('.swiper', {
+//   // configure Swiper to use modules
+//   modules: [Navigation],
+// });
 ---
 
 <section id={id} class="gallery">
-  <div class="container gallery__container">
+  <div class="container">
     <h2>{title}</h2>
 
-    <div class="gallery__image-wrapper">
-      <div id="gallery-images">
-        {images.map(image => <img src={getUrlForImage(image).url()} alt={image.alt} />)}
-      </div>
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+
     </div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
 </section>
 
 <script>
-  import Macy from 'macy';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
 
-  const macy = Macy({
-    container: '#gallery-images',
-    margin: 24,
-    columns: 5,
-    breakAt: {
-      1200: 5,
-      940: 3,
-      520: 2,
-      400: 1,
-    },
-  });
+const swiper = new Swiper('.swiper', {
+  // configure Swiper to use modules
+  modules: [Navigation],
+});
 </script>
 
 <style lang="scss">
-  .gallery {
-    background: var(--color-grey) url('/images/bff-flame-cutoff-gallery.png') no-repeat left bottom;
-    background-size: auto 270px;
-
-    &__container {
-      padding-bottom: 0;
-    }
-
-    &__image-wrapper {
-      max-height: 500px;
-      overflow: hidden;
-    }
-  }
+.gallery {
+  background: var(--color-grey) url('/images/bff-flame-cutoff-gallery.png') no-repeat left bottom;
+  background-size: auto 70%;
+}
 </style>
