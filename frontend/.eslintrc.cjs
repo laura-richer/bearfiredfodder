@@ -12,13 +12,13 @@ module.exports = {
     'prettier',
   ],
   plugins: ['astro', 'prettier', 'sonarjs', 'unicorn', 'github'],
-  // parserOptions: {
-  //   parser: '@babel/eslint-parser',
-  //   ecmaVersion: 'latest',
-  //   extends: 'airbnb-base',
-  //   requireConfigFile: false,
-  //   sourceType: 'module',
-  // },
+  parserOptions: {
+    parser: '@babel/eslint-parser',
+    ecmaVersion: 'latest',
+    extends: 'airbnb-base',
+    requireConfigFile: false,
+    sourceType: 'module',
+  },
   settings: {
     'import/resolver': {
       alias: {

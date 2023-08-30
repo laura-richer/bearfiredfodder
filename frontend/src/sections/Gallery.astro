@@ -25,70 +25,78 @@ const { title, images, id } = Astro.props;
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
 
-  const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
+const skipButton = document.querySelector('.gallery__skip-button');
+const galleryImages = document.querySelector('#gallery-images');
+const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
 );
 
-console.log(breakpoint);
-
 const setMobileBreakpoint = () => {
-    return !window.matchMedia(`(min-width: ${breakpoint})`).matches;
+  return !window.matchMedia(`(min-width: ${breakpoint})`).matches;
 };
 
 let mobileBreakpoint = setMobileBreakpoint();
+
 const handleResize = debounce(() => {
-    mobileBreakpoint = setMobileBreakpoint();
-  }, 100);
+  mobileBreakpoint = setMobileBreakpoint();
+}, 100);
 
-  window.addEventListener('load', handleResize);
-  window.addEventListener('resize', handleResize);
+window.addEventListener('load', handleResize);
+window.addEventListener('resize', handleResize);
 
-  const macy = Macy({
-    container: '#gallery-images',
-    margin: 20,
-    columns: 4,
-    breakAt: {
-      1440: 3,
-      1024: 2,
-      680: 1,
-    },
-  });
+const macy = Macy({
+  container: '#gallery-images',
+  margin: 20,
+  columns: 4,
+  breakAt: {
+    1440: 3,
+    1024: 2,
+    680: 1,
+  },
+});
 
-  macy.runOnImageLoad(function () {
-    const galleryImages = document.querySelector('#gallery-images');
-    const skipButton = document.querySelector('.gallery__skip-button');
-    const galleryImagesNavigationCount = Math.ceil(galleryImages.clientHeight / 500);
-    console.log(mobileBreakpoint);
+const renderGalleryNavigation = () => {
+  const galleryImagesNavigationCount = Math.ceil(galleryImages.clientHeight / 500);
 
-    if (galleryImagesNavigationCount > 1 && !mobileBreakpoint) {
-      skipButton.remove();
-      const galleryImagesNavigation = document.createElement('div');
-      galleryImagesNavigation.classList.add('gallery__navigation');
+  if (galleryImagesNavigationCount <= 1 || mobileBreakpoint) {
+    skipButton.style.display = 'flex';
+    return;
+  }
 
-      for (let index = 0; index < galleryImagesNavigationCount; index++) {
-        const galleryImagesNavigationItem = document.createElement('span');
-        galleryImagesNavigationItem.classList.add('gallery__navigation-item');
-        if (index === 0)
-          galleryImagesNavigationItem.classList.add('gallery__navigation-item--active');
-        galleryImagesNavigationItem.dataset.index = index;
+  skipButton.remove();
+  const galleryNavigationItemActiveClass = 'gallery__navigation-item--active';
 
-        galleryImagesNavigationItem.addEventListener('click', event => {
-          galleryImagesNavigation.childNodes.forEach(galleryItemNavigation => {
-            galleryItemNavigation.classList.remove('gallery__navigation-item--active');
-          });
+  // Build gallery navigation wrapper
+  const galleryImagesNavigation = document.createElement('div');
+  galleryImagesNavigation.classList.add('gallery__navigation');
 
-          event.target.classList.add('gallery__navigation-item--active');
-          const { index } = event.target.dataset;
-          galleryImages.style.transform = `translateY(-${index * 500}px)`;
-        });
+  // Build gallery navigation items
+  for (let index = 0; index < galleryImagesNavigationCount; index++) {
+    const galleryImagesNavigationItem = document.createElement('span');
+    galleryImagesNavigationItem.classList.add('gallery__navigation-item');
 
-        galleryImagesNavigation.append(galleryImagesNavigationItem);
-      }
+    if (index === 0) galleryImagesNavigationItem.classList.add(galleryNavigationItemActiveClass);
+    galleryImagesNavigationItem.dataset.slide = index;
 
-      document.querySelector('.gallery__image-wrapper').append(galleryImagesNavigation);
-    }
-  });
-  // TODO destroy event listners
+    galleryImagesNavigationItem.addEventListener('click', event => {
+      galleryImagesNavigation.childNodes.forEach(galleryItemNavigation => {
+        galleryItemNavigation.classList.remove(galleryNavigationItemActiveClass);
+      });
+
+      event.target.classList.add(galleryNavigationItemActiveClass);
+      const { slide } = event.target.dataset;
+      galleryImages.style.transform = `translateY(-${slide * 500}px)`;
+    });
+
+    galleryImagesNavigation.append(galleryImagesNavigationItem);
+  }
+
+  document.querySelector('.gallery__image-wrapper').append(galleryImagesNavigation);
+};
+
+macy.runOnImageLoad(renderGalleryNavigation);
+
+// TODO destroy event listners
 </script>
 
 <style lang="scss" is:global>
@@ -123,6 +131,10 @@ const handleResize = debounce(() => {
       overflow: auto;
 
       @media screen and (min-width: 768px) {
+        max-height: 750px;
+      }
+
+      @media screen and (min-width: 1024px) {
         overflow: hidden;
       }
     }
@@ -130,7 +142,7 @@ const handleResize = debounce(() => {
     &__images {
       transition: transform 0.7s ease-in-out;
 
-      @media screen and (min-width: 768px) {
+      @media screen and (min-width: 1024px) {
         width: calc(100% - 3rem);
       }
     }
@@ -162,7 +174,7 @@ const handleResize = debounce(() => {
 
     &__skip-button {
       position: absolute;
-      display: flex;
+      display: none;
       justify-content: center;
       left: 0;
       right: 0;
