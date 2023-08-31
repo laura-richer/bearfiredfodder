@@ -28,6 +28,7 @@ const { title, images, id } = Astro.props;
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
 
+const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
 const galleryImages = document.querySelector('#gallery-images');
 const skipButton = document.querySelector('.gallery__skip-button');
@@ -104,16 +105,26 @@ const handleRenderGalleryNavigation = debounce(() => {
   buildGalleryNavigationItems(galleryNavigationItemCount);
 }, 300);
 
+const handleScroll = debounce(() => {
+  if (!mobileBreakpoint) return;
+
+  const galleryPosition = gallery.getBoundingClientRect().top;
+  galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'scroll' : 'hidden';
+}, 100);
+
 macy.runOnImageLoad(handleRenderGalleryNavigation);
 macy.on(macy.constants.EVENT_RESIZE, handleRenderGalleryNavigation);
+
+window.addEventListener('scroll', handleScroll);
 
 const galleryObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
-      const intersecting = entry.isIntersecting;
+      const { isIntersecting } = entry;
       if (!mobileBreakpoint) return;
 
-      skipButton.style.transform = intersecting ? 'translateY(0)' : 'translateY(100px)';
+      skipButton.style.transform = isIntersecting ? 'translateY(0)' : 'translateY(100px)';
+      // galleryImageWrapper.style.overflow = isIntersecting ? '' : 'auto';
     });
   },
   { threshold: 0.3 }
@@ -122,10 +133,10 @@ const galleryObserver = new IntersectionObserver(
 const contactObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
-      const intersecting = entry.isIntersecting;
+      const { isIntersecting } = entry;
       if (!mobileBreakpoint) return;
 
-      skipButton.style.transform = intersecting ? 'translateY(100px)' : 'translateY(0)';
+      skipButton.style.transform = isIntersecting ? 'translateY(100px)' : 'translateY(0)';
     });
   },
   { threshold: 0.3 }
