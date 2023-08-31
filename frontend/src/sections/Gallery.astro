@@ -11,13 +11,16 @@ const { title, images, id } = Astro.props;
 
     <div class="gallery__image-wrapper">
       <div id="gallery-images" class="gallery__images">
-        {images.map(image => <img src={getUrlForImage(image).url()} alt={image.alt} />)}
+        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt} />)}
       </div>
+
+      <div class="gallery__navigation"></div>
     </div>
 
     <div class="gallery__skip-button">
       <Button text="Skip to contact details" link="#contact" />
     </div>
+
   </div>
 </section>
 
@@ -25,8 +28,10 @@ const { title, images, id } = Astro.props;
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
 
-const skipButton = document.querySelector('.gallery__skip-button');
+const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
 const galleryImages = document.querySelector('#gallery-images');
+const skipButton = document.querySelector('.gallery__skip-button');
+const galleryNavigation = document.querySelector('.gallery__navigation');
 const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
 );
@@ -36,13 +41,6 @@ const setMobileBreakpoint = () => {
 };
 
 let mobileBreakpoint = setMobileBreakpoint();
-
-const handleResize = debounce(() => {
-  mobileBreakpoint = setMobileBreakpoint();
-}, 100);
-
-window.addEventListener('load', handleResize);
-window.addEventListener('resize', handleResize);
 
 const macy = Macy({
   container: '#gallery-images',
@@ -55,31 +53,23 @@ const macy = Macy({
   },
 });
 
-const renderGalleryNavigation = () => {
-  const galleryImagesNavigationCount = Math.ceil(galleryImages.clientHeight / 500);
-
-  if (galleryImagesNavigationCount <= 1 || mobileBreakpoint) {
-    skipButton.style.display = 'flex';
-    return;
-  }
-
-  skipButton.remove();
+const buildGalleryNavigationItems = navigationCount => {
   const galleryNavigationItemActiveClass = 'gallery__navigation-item--active';
 
-  // Build gallery navigation wrapper
-  const galleryImagesNavigation = document.createElement('div');
-  galleryImagesNavigation.classList.add('gallery__navigation');
+  // Clear navigation items to re render based on new size
+  galleryNavigation.innerHTML = '';
 
   // Build gallery navigation items
-  for (let index = 0; index < galleryImagesNavigationCount; index++) {
-    const galleryImagesNavigationItem = document.createElement('span');
-    galleryImagesNavigationItem.classList.add('gallery__navigation-item');
+  // TODO write this better
+  for (let index = 0; index < navigationCount; index++) {
+    const galleryNavigationItem = document.createElement('span');
+    galleryNavigationItem.classList.add('gallery__navigation-item');
+    galleryNavigationItem.dataset.slide = index;
 
-    if (index === 0) galleryImagesNavigationItem.classList.add(galleryNavigationItemActiveClass);
-    galleryImagesNavigationItem.dataset.slide = index;
+    if (index === 0) galleryNavigationItem.classList.add(galleryNavigationItemActiveClass);
 
-    galleryImagesNavigationItem.addEventListener('click', event => {
-      galleryImagesNavigation.childNodes.forEach(galleryItemNavigation => {
+    galleryNavigationItem.addEventListener('click', event => {
+      galleryNavigation.childNodes.forEach(galleryItemNavigation => {
         galleryItemNavigation.classList.remove(galleryNavigationItemActiveClass);
       });
 
@@ -88,15 +78,61 @@ const renderGalleryNavigation = () => {
       galleryImages.style.transform = `translateY(-${slide * 500}px)`;
     });
 
-    galleryImagesNavigation.append(galleryImagesNavigationItem);
+    galleryNavigation.append(galleryNavigationItem);
   }
-
-  document.querySelector('.gallery__image-wrapper').append(galleryImagesNavigation);
 };
 
-macy.runOnImageLoad(renderGalleryNavigation);
+const toggleNavigationType = (isMobile, navigationItemCount) => {
+  skipButton.style.display = navigationItemCount <= 1 ? 'none' : isMobile ? 'flex' : 'none';
+  galleryNavigation.style.display = navigationItemCount <= 1 ? 'none' : isMobile ? 'none' : 'flex';
+};
 
-// TODO destroy event listners
+const resetGalleryToTop = () => {
+  galleryImageWrapper.scrollTop = 0;
+  galleryImages.style.transform = `translateY(0)`;
+};
+
+const handleRenderGalleryNavigation = debounce(() => {
+  const galleryNavigationItemCount = Math.ceil(galleryImages.clientHeight / 500);
+  mobileBreakpoint = setMobileBreakpoint();
+
+  toggleNavigationType(mobileBreakpoint, galleryNavigationItemCount);
+  resetGalleryToTop();
+
+  if (galleryNavigationItemCount <= 1 || mobileBreakpoint) return;
+
+  buildGalleryNavigationItems(galleryNavigationItemCount);
+}, 300);
+
+macy.runOnImageLoad(handleRenderGalleryNavigation);
+macy.on(macy.constants.EVENT_RESIZE, handleRenderGalleryNavigation);
+
+const galleryObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      const intersecting = entry.isIntersecting;
+      if (!mobileBreakpoint) return;
+
+      skipButton.style.transform = intersecting ? 'translateY(0)' : 'translateY(100px)';
+    });
+  },
+  { threshold: 0.3 }
+);
+
+const contactObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      const intersecting = entry.isIntersecting;
+      if (!mobileBreakpoint) return;
+
+      skipButton.style.transform = intersecting ? 'translateY(100px)' : 'translateY(0)';
+    });
+  },
+  { threshold: 0.3 }
+);
+
+galleryObserver.observe(document.querySelector('.gallery'));
+contactObserver.observe(document.querySelector('.contact'));
 </script>
 
 <style lang="scss" is:global>
@@ -173,8 +209,8 @@ macy.runOnImageLoad(renderGalleryNavigation);
     }
 
     &__skip-button {
-      position: absolute;
-      display: none;
+      position: fixed;
+      // display: none;
       justify-content: center;
       left: 0;
       right: 0;
@@ -183,6 +219,12 @@ macy.runOnImageLoad(renderGalleryNavigation);
       left: 0;
       right: 0;
       margin: auto;
+      transform: translateY(100px);
+      transition: transform 0.25s ease-in-out;
+    }
+
+    &__navigation {
+      display: none;
     }
   }
 </style>
