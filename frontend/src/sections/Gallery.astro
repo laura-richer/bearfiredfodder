@@ -105,12 +105,12 @@ const handleRenderGalleryNavigation = debounce(() => {
   buildGalleryNavigationItems(galleryNavigationItemCount);
 }, 300);
 
-const handleScroll = debounce(() => {
+const handleScroll = () => {
   if (!mobileBreakpoint) return;
 
   const galleryPosition = gallery.getBoundingClientRect().top;
-  galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'scroll' : 'hidden';
-}, 100);
+  galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'auto' : 'hidden';
+};
 
 macy.runOnImageLoad(handleRenderGalleryNavigation);
 macy.on(macy.constants.EVENT_RESIZE, handleRenderGalleryNavigation);
@@ -124,7 +124,6 @@ const galleryObserver = new IntersectionObserver(
       if (!mobileBreakpoint) return;
 
       skipButton.style.transform = isIntersecting ? 'translateY(0)' : 'translateY(100px)';
-      // galleryImageWrapper.style.overflow = isIntersecting ? '' : 'auto';
     });
   },
   { threshold: 0.3 }
