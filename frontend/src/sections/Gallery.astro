@@ -28,7 +28,6 @@ const { title, images, id } = Astro.props;
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
 
-const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
 const galleryImages = document.querySelector('#gallery-images');
 const skipButton = document.querySelector('.gallery__skip-button');
@@ -105,22 +104,23 @@ const handleRenderGalleryNavigation = debounce(() => {
   buildGalleryNavigationItems(galleryNavigationItemCount);
 }, 300);
 
-const handleScroll = () => {
-  if (!mobileBreakpoint) return;
-
-  const galleryPosition = gallery.getBoundingClientRect().top;
-  galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'auto' : 'hidden';
-};
-
 macy.runOnImageLoad(handleRenderGalleryNavigation);
 macy.on(macy.constants.EVENT_RESIZE, handleRenderGalleryNavigation);
 
-window.addEventListener('scroll', handleScroll);
+// const handleScroll = () => {
+//   if (!mobileBreakpoint) return;
+
+//   const galleryPosition = gallery.getBoundingClientRect().top;
+//   galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'auto' : 'hidden';
+// };
+
+// window.addEventListener('scroll', handleScroll);
 
 const galleryObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       const { isIntersecting } = entry;
+      console.log(isIntersecting, 'gallery');
       if (!mobileBreakpoint) return;
 
       skipButton.style.transform = isIntersecting ? 'translateY(0)' : 'translateY(100px)';
@@ -133,6 +133,7 @@ const contactObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       const { isIntersecting } = entry;
+      console.log(isIntersecting, 'contact');
       if (!mobileBreakpoint) return;
 
       skipButton.style.transform = isIntersecting ? 'translateY(100px)' : 'translateY(0)';
@@ -220,7 +221,6 @@ contactObserver.observe(document.querySelector('.contact'));
 
     &__skip-button {
       position: fixed;
-      // display: none;
       justify-content: center;
       left: 0;
       right: 0;

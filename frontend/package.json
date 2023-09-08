@@ -9,10 +9,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "stylelint": "stylelint '**/*.{scss,astro, astrojs}' && exit 0",
-    "stylelint:fix": "stylelint --fix '**/*.{scss,astro, astrojs}' && exit 0",
     "eslint": "eslint src/**/*.{js,astro}",
-    "eslint:fix": "eslint --fix './src/**/*.{js,astro, astrojs}' && exit 0"
+    "eslint:fix": "eslint --fix './src/**/*.{js,astro, astrojs}' && exit 0",
+    "stylelint": "stylelint './src/**/*.scss' './src/**/*.astro'",
+    "stylelint:fix": "stylelint './src/**/*.scss' './src/**/*.astro' --fix"
   },
   "devDependencies": {
     "@astrojs/vercel": "^3.7.1",
@@ -35,7 +35,10 @@
     "postcss-html": "^1.5.0",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
-    "sass": "^1.64.1"
+    "sass": "^1.64.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-idiomatic-order": "^9.0.0",
+    "stylelint-config-prettier": "^9.0.5"
   },
   "dependencies": {
     "@sanity/client": "^6.1.7",
