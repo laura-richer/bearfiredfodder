@@ -10,7 +10,7 @@ const { title, images, id } = Astro.props;
     <h2>{title}</h2>
 
     <div class="gallery__image-wrapper">
-      <div id="gallery-images" class="gallery__images">
+      <div id="gallery-masonary-container" class="gallery__images">
         {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt} />)}
       </div>
     </div>
@@ -27,7 +27,7 @@ import Macy from 'macy';
 
 const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
-const galleryImages = document.querySelector('#gallery-images');
+const galleryImages = document.querySelector('#gallery-masonary-container');
 const loadMoreButton = document.querySelector('.gallery__load-more');
 const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
@@ -38,17 +38,14 @@ let mobileBreakpoint = setMobileBreakpoint();
 
 const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
 let initialGalleryHeight = setInitialGalleryHeight();
+document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
 
-const setLoadMoreTotal = debounce(
-  () => Math.ceil(galleryImages.clientHeight / initialGalleryHeight),
-  300
-);
-
+const setLoadMoreTotal = () => Math.ceil(galleryImages.clientHeight / initialGalleryHeight);
 let galleryLoadMoreTotal = setLoadMoreTotal();
 let loadMoreCount = 1;
 
 const macy = Macy({
-  container: '#gallery-images',
+  container: '#gallery-masonary-container',
   margin: 20,
   columns: 4,
   breakAt: {
@@ -80,7 +77,12 @@ const handleResize = debounce(() => {
   initialGalleryHeight = setInitialGalleryHeight();
   galleryLoadMoreTotal = setLoadMoreTotal();
   loadMoreCount = 1;
+
   resetGalleryToTop();
+
+  document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
+  loadMoreButton.style.display = 'flex';
+  gallery.classList.add('gallery--gradient');
 }, 300);
 
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
@@ -118,13 +120,9 @@ macy.on(macy.constants.EVENT_RESIZE, handleResize);
 
     &__image-wrapper {
       position: relative;
-      max-height: 500px;
+      max-height: var(--gallery-height);
       overflow: hidden;
       transition: max-height 0.5s ease-in-out;
-
-      @media screen and (min-width: 768px) {
-        max-height: 750px;
-      }
     }
 
     &__images {
