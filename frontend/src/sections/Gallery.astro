@@ -81,29 +81,45 @@ const handleResize = debounce(() => {
   gallery.classList.add('gallery--gradient');
 }, 300);
 
-const observer = new IntersectionObserver(async entries => {
-  entries.forEach(async entry => {
-    if (entry.isIntersecting) {
-      await handleGalleryLoad();
+// const observer = new IntersectionObserver(entries => {
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting) {
+//       const macy = Macy({
+//         container: '#gallery-masonary-container',
+//         margin: 20,
+//         columns: 4,
+//         breakAt: {
+//           1440: 3,
+//           1024: 2,
+//           680: 1,
+//         },
+//       });
 
-      const macy = Macy({
-        container: '#gallery-masonary-container',
-        margin: 20,
-        columns: 4,
-        breakAt: {
-          1440: 3,
-          1024: 2,
-          680: 1,
-        },
-      });
+//       macy.runOnImageLoad(handleResize);
+//       macy.on(macy.constants.EVENT_RESIZE, handleResize);
+//     }
+//   });
+// });
 
-      macy.runOnImageLoad(handleResize);
-      macy.on(macy.constants.EVENT_RESIZE, handleResize);
-    }
+async function loadGallery() {
+  await handleGalleryLoad();
+
+  const macy = Macy({
+    container: '#gallery-masonary-container',
+    margin: 20,
+    columns: 4,
+    breakAt: {
+      1440: 3,
+      1024: 2,
+      680: 1,
+    },
   });
-});
 
-observer.observe(gallery);
+  macy.runOnImageLoad(handleResize);
+  macy.on(macy.constants.EVENT_RESIZE, handleResize);
+}
+
+await loadGallery();
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 
@@ -140,14 +156,6 @@ loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
       max-height: var(--gallery-height);
       overflow: hidden;
       transition: max-height 0.5s ease-in-out;
-    }
-
-    &__images {
-      transition: transform 0.7s ease-in-out;
-
-      @media screen and (min-width: 1024px) {
-        width: calc(100% - 3rem);
-      }
     }
 
     &__load-more {
