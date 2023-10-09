@@ -10,7 +10,7 @@ const { title, images, id } = Astro.props;
     <h2>{title}</h2>
     <div class="gallery__image-wrapper">
       <div id="gallery-masonary-container" class="gallery__images">
-        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt || images[0]._key} />)}
+        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt || images[0]._key} loading="lazy" />)}
       </div>
     </div>
 
@@ -43,17 +43,6 @@ const setLoadMoreTotal = () => Math.ceil(galleryImages.clientHeight / initialGal
 let galleryLoadMoreTotal = setLoadMoreTotal();
 let loadMoreCount = 1;
 
-const macy = Macy({
-  container: '#gallery-masonary-container',
-  margin: 20,
-  columns: 4,
-  breakAt: {
-    1440: 3,
-    1024: 2,
-    680: 1,
-  },
-});
-
 const resetGalleryToTop = () => {
   galleryImageWrapper.scrollTop = 0;
   galleryImageWrapper.style.maxHeight = `${initialGalleryHeight}px`;
@@ -84,9 +73,28 @@ const handleResize = debounce(() => {
   gallery.classList.add('gallery--gradient');
 }, 300);
 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const macy = Macy({
+        container: '#gallery-masonary-container',
+        margin: 20,
+        columns: 4,
+        breakAt: {
+          1440: 3,
+          1024: 2,
+          680: 1,
+        },
+      });
+
+      macy.runOnImageLoad(handleResize);
+      macy.on(macy.constants.EVENT_RESIZE, handleResize);
+    }
+  });
+});
+observer.observe(gallery);
+
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
-macy.runOnImageLoad(handleResize);
-macy.on(macy.constants.EVENT_RESIZE, handleResize);
 </script>
 
 <style lang="scss" is:global>

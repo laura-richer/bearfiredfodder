@@ -54,12 +54,7 @@ module.exports = {
     'max-nested-callbacks': ['warn', 4],
     'no-console': 'warn',
     'no-debugger': 'error',
-    'no-plusplus': [
-      'warn',
-      {
-        allowForLoopAfterthoughts: true,
-      },
-    ],
+    'no-plusplus': ['off'],
     'no-unused-vars': 'warn',
     'prettier/prettier': 'warn',
     'unicorn/filename-case': 'off',
