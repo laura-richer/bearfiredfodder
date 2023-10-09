@@ -2,9 +2,7 @@
 const { text, link } = Astro.props;
 ---
 
-<a class="button" href={link}>
-  {text}
-</a>
+<a class="button" href={link}>{text}</a>
 
 <style lang="scss" is:global>
   .button {

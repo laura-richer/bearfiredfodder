@@ -5,7 +5,7 @@ import Button from '@/components/Button.astro';
 const { title, images, id } = Astro.props;
 ---
 
-<section id={id} class="gallery">
+<section id={id} class="gallery gallery--gradient">
   <div class="container gallery__container">
     <h2>{title}</h2>
 
@@ -13,14 +13,11 @@ const { title, images, id } = Astro.props;
       <div id="gallery-images" class="gallery__images">
         {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt} />)}
       </div>
-
-      <div class="gallery__navigation"></div>
     </div>
 
-    <div class="gallery__skip-button">
-      <Button text="Skip to contact details" link="#contact" />
+    <div class="gallery__load-more">
+      <Button text="Load more" />
     </div>
-
   </div>
 </section>
 
@@ -28,19 +25,27 @@ const { title, images, id } = Astro.props;
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
 
+const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
 const galleryImages = document.querySelector('#gallery-images');
-const skipButton = document.querySelector('.gallery__skip-button');
-const galleryNavigation = document.querySelector('.gallery__navigation');
+const loadMoreButton = document.querySelector('.gallery__load-more');
 const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
 );
 
-const setMobileBreakpoint = () => {
-  return !window.matchMedia(`(min-width: ${breakpoint})`).matches;
-};
-
+const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
 let mobileBreakpoint = setMobileBreakpoint();
+
+const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
+let initialGalleryHeight = setInitialGalleryHeight();
+
+const setLoadMoreTotal = debounce(
+  () => Math.ceil(galleryImages.clientHeight / initialGalleryHeight),
+  300
+);
+
+let galleryLoadMoreTotal = setLoadMoreTotal();
+let loadMoreCount = 1;
 
 const macy = Macy({
   container: '#gallery-images',
@@ -53,97 +58,34 @@ const macy = Macy({
   },
 });
 
-const buildGalleryNavigationItems = navigationCount => {
-  const galleryNavigationItemActiveClass = 'gallery__navigation-item--active';
+const resetGalleryToTop = () => {
+  galleryImageWrapper.scrollTop = 0;
+  galleryImageWrapper.style.maxHeight = `${initialGalleryHeight}px`;
+};
 
-  // Clear navigation items to re render based on new size
-  galleryNavigation.innerHTML = '';
+const handleLoadMoreClick = () => {
+  loadMoreCount++;
 
-  // Build gallery navigation items
-  // TODO write this better
-  for (let index = 0; index < navigationCount; index++) {
-    const galleryNavigationItem = document.createElement('span');
-    galleryNavigationItem.classList.add('gallery__navigation-item');
-    galleryNavigationItem.dataset.slide = index;
+  const galleryHeight = initialGalleryHeight * loadMoreCount;
+  galleryImageWrapper.style.maxHeight = `${galleryHeight}px`;
 
-    if (index === 0) galleryNavigationItem.classList.add(galleryNavigationItemActiveClass);
-
-    galleryNavigationItem.addEventListener('click', event => {
-      galleryNavigation.childNodes.forEach(galleryItemNavigation => {
-        galleryItemNavigation.classList.remove(galleryNavigationItemActiveClass);
-      });
-
-      event.target.classList.add(galleryNavigationItemActiveClass);
-      const { slide } = event.target.dataset;
-      galleryImages.style.transform = `translateY(-${slide * 500}px)`;
-    });
-
-    galleryNavigation.append(galleryNavigationItem);
+  if (loadMoreCount === galleryLoadMoreTotal) {
+    loadMoreButton.style.display = 'none';
+    gallery.classList.remove('gallery--gradient');
   }
 };
 
-const toggleNavigationType = (isMobile, navigationItemCount) => {
-  skipButton.style.display = navigationItemCount <= 1 ? 'none' : isMobile ? 'flex' : 'none';
-  galleryNavigation.style.display = navigationItemCount <= 1 ? 'none' : isMobile ? 'none' : 'flex';
-};
-
-const resetGalleryToTop = () => {
-  galleryImageWrapper.scrollTop = 0;
-  galleryImages.style.transform = `translateY(0)`;
-};
-
-const handleRenderGalleryNavigation = debounce(() => {
-  const galleryNavigationItemCount = Math.ceil(galleryImages.clientHeight / 500);
+const handleResize = debounce(() => {
   mobileBreakpoint = setMobileBreakpoint();
-
-  toggleNavigationType(mobileBreakpoint, galleryNavigationItemCount);
+  initialGalleryHeight = setInitialGalleryHeight();
+  galleryLoadMoreTotal = setLoadMoreTotal();
+  loadMoreCount = 1;
   resetGalleryToTop();
-
-  if (galleryNavigationItemCount <= 1 || mobileBreakpoint) return;
-
-  buildGalleryNavigationItems(galleryNavigationItemCount);
 }, 300);
 
-macy.runOnImageLoad(handleRenderGalleryNavigation);
-macy.on(macy.constants.EVENT_RESIZE, handleRenderGalleryNavigation);
-
-// const handleScroll = () => {
-//   if (!mobileBreakpoint) return;
-
-//   const galleryPosition = gallery.getBoundingClientRect().top;
-//   galleryImageWrapper.style.overflow = galleryPosition < 55 ? 'auto' : 'hidden';
-// };
-
-// window.addEventListener('scroll', handleScroll);
-
-const galleryObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      const { isIntersecting } = entry;
-      console.log(isIntersecting, 'gallery');
-      if (!mobileBreakpoint) return;
-
-      skipButton.style.transform = isIntersecting ? 'translateY(0)' : 'translateY(100px)';
-    });
-  },
-  { threshold: 0.3 }
-);
-
-const contactObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      const { isIntersecting } = entry;
-      console.log(isIntersecting, 'contact');
-      if (!mobileBreakpoint) return;
-
-      skipButton.style.transform = isIntersecting ? 'translateY(100px)' : 'translateY(0)';
-    });
-  },
-  { threshold: 0.3 }
-);
-
-galleryObserver.observe(document.querySelector('.gallery'));
-contactObserver.observe(document.querySelector('.contact'));
+loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
+macy.runOnImageLoad(handleResize);
+macy.on(macy.constants.EVENT_RESIZE, handleResize);
 </script>
 
 <style lang="scss" is:global>
@@ -152,7 +94,8 @@ contactObserver.observe(document.querySelector('.contact'));
     background: var(--color-grey) url('/images/bff-flame-cutoff-gallery.png') no-repeat left bottom;
     background-size: auto 270px;
 
-    &:after {
+    &--gradient {
+      &:after {
       position: absolute;
       content: '';
       width: 100%;
@@ -167,6 +110,7 @@ contactObserver.observe(document.querySelector('.contact'));
       bottom: 0;
       left: 0;
     }
+    }
 
     &__container {
       padding-bottom: 0;
@@ -175,14 +119,11 @@ contactObserver.observe(document.querySelector('.contact'));
     &__image-wrapper {
       position: relative;
       max-height: 500px;
-      overflow: auto;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
 
       @media screen and (min-width: 768px) {
         max-height: 750px;
-      }
-
-      @media screen and (min-width: 1024px) {
-        overflow: hidden;
       }
     }
 
@@ -194,47 +135,16 @@ contactObserver.observe(document.querySelector('.contact'));
       }
     }
 
-    &__navigation {
-      position: absolute;
-      right: 0;
-      top: 50%;
+    &__load-more {
       display: flex;
-      flex-direction: column;
-      z-index: 10;
-      gap: 0.5rem;
-
-      &-item {
-        cursor: pointer;
-        width: 1rem;
-        height: 1rem;
-        border-radius: 50%;
-        background-color: var(--color-black);
-        transition: background-color 0.3s ease-in-out;
-
-        &--active,
-        &:hover,
-        &:focus {
-          background-color: var(--color-red);
-        }
-      }
-    }
-
-    &__skip-button {
-      position: fixed;
+      position: absolute;
       justify-content: center;
       left: 0;
       right: 0;
       bottom: var(--spacer-s);
       z-index: 9999;
-      left: 0;
-      right: 0;
       margin: auto;
-      transform: translateY(100px);
-      transition: transform 0.25s ease-in-out;
-    }
-
-    &__navigation {
-      display: none;
+      cursor: pointer;
     }
   }
 </style>
