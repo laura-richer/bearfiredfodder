@@ -10,7 +10,7 @@ const { title, images, id } = Astro.props;
     <h2>{title}</h2>
     <div class="gallery__image-wrapper">
       <div id="gallery-masonary-container" class="gallery__images">
-        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt || images[0]._key} loading="lazy" />)}
+        {images.map(image => <img class="gallery__image" data-src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt || images[0]._key} />)}
       </div>
     </div>
 
@@ -26,7 +26,8 @@ import Macy from 'macy';
 
 const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
-const galleryImages = document.querySelector('#gallery-masonary-container');
+const masonaryWrapper = document.querySelector('#gallery-masonary-container');
+const galleryImages = document.querySelectorAll('.gallery__image');
 const loadMoreButton = document.querySelector('.gallery__load-more');
 const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
@@ -39,9 +40,16 @@ const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
 let initialGalleryHeight = setInitialGalleryHeight();
 document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
 
-const setLoadMoreTotal = () => Math.ceil(galleryImages.clientHeight / initialGalleryHeight);
+const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialGalleryHeight);
 let galleryLoadMoreTotal = setLoadMoreTotal();
 let loadMoreCount = 1;
+
+const handleGalleryLoad = () => {
+  galleryImages.forEach(image => {
+    const imgSrc = image.dataset.src;
+    image.setAttribute('src', imgSrc);
+  });
+};
 
 const resetGalleryToTop = () => {
   galleryImageWrapper.scrollTop = 0;
@@ -76,6 +84,8 @@ const handleResize = debounce(() => {
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      handleGalleryLoad();
+
       const macy = Macy({
         container: '#gallery-masonary-container',
         margin: 20,
@@ -92,8 +102,8 @@ const observer = new IntersectionObserver(entries => {
     }
   });
 });
-observer.observe(gallery);
 
+observer.observe(gallery);
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 
