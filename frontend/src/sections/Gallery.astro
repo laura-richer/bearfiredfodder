@@ -8,10 +8,9 @@ const { title, images, id } = Astro.props;
 <section id={id} class="gallery gallery--gradient">
   <div class="container gallery__container">
     <h2>{title}</h2>
-
     <div class="gallery__image-wrapper">
       <div id="gallery-masonary-container" class="gallery__images">
-        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt} />)}
+        {images.map(image => <img src={`${getUrlForImage(image).url()}?w=640&q=80`} alt={image.alt || images[0]._key} />)}
       </div>
     </div>
 
