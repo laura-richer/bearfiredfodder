@@ -1,19 +1,26 @@
 ---
-const { text, link } = Astro.props;
+const { text, link, tag } = Astro.props;
+
+const ButtonElement = tag || 'a';
 ---
 
-<a class="button" href={link}>{text}</a>
+<ButtonElement class="button" href={link}>{text}</ButtonElement>
 
 <style lang="scss" is:global>
   .button {
     display: inline-block;
     color: var(--color-white);
     background-color: var(--color-red);
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
     font-weight: var(--font-weight-semibold);
     text-decoration: none;
     text-transform: uppercase;
+    border: none;
     padding: var(--spacer-xs) var(--spacer-s);
     transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
 
     &:hover,
     &:focus,
