@@ -10,6 +10,7 @@ export default (targetElement, callback) => {
         if (entry.isIntersecting) {
           if (callback) callback();
           revealElement(targetElement);
+
           observer.unobserve(targetElement);
         }
       });
