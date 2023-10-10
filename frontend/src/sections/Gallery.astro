@@ -38,11 +38,11 @@ const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})
 let mobileBreakpoint = setMobileBreakpoint();
 
 const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
-let initialGalleryHeight = setInitialGalleryHeight();
+let initialGalleryHeight;
 document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
 
 const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialGalleryHeight);
-let galleryLoadMoreTotal = setLoadMoreTotal();
+let galleryLoadMoreTotal;
 let loadMoreCount = 1;
 
 const handleGalleryLoad = () => {
@@ -95,16 +95,16 @@ const handleResize = debounce(() => {
   gallery.classList.add('gallery--gradient');
 }, 300);
 
-const handleGalleryIntersection = async () => {
+const handleLoadGallery = async () => {
   await handleGalleryLoad();
   const macy = await initMasonaryGrid();
 
   macy.runOnImageLoad(handleResize);
   macy.on(macy.constants.EVENT_RESIZE, handleResize);
-  galleryImageWrapper.style.opacity = 1;
 };
 
-showSection(gallery, handleGalleryIntersection);
+document.addEventListener('DOMContentLoaded', handleLoadGallery);
+showSection(gallery);
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 
@@ -113,7 +113,8 @@ loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
     position: relative;
     background: var(--color-grey) url('/images/bff-flame-cutoff-gallery.png') no-repeat left bottom;
     background-size: auto 270px;
-
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
     &--gradient {
       &:after {
       position: absolute;
@@ -137,11 +138,10 @@ loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
     }
 
     &__image-wrapper {
-      opacity: 0;
       position: relative;
       max-height: var(--gallery-height);
       overflow: hidden;
-      transition: all 0.5s ease-in-out;
+      transition: max-height 0.5s ease-in-out;
     }
 
     &__load-more {
