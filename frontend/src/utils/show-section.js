@@ -8,8 +8,8 @@ export default (targetElement, callback) => {
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          revealElement(targetElement);
           if (callback) callback();
+          revealElement(targetElement);
           observer.unobserve(targetElement);
         }
       });

@@ -33,7 +33,6 @@ const loadMoreButton = document.querySelector('.gallery__load-more');
 const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
   '--breakpoint-desktop'
 );
-let hasScrolled = false;
 
 const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
 let mobileBreakpoint = setMobileBreakpoint();
@@ -46,11 +45,11 @@ const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialG
 let galleryLoadMoreTotal;
 let loadMoreCount = 1;
 
-const handleGalleryLoad = () => {
-  galleryImages.forEach(image => {
+const handleGalleryLoad = async () => {
+  for (const image of galleryImages) {
     const imgSrc = image.dataset.src;
-    image.setAttribute('src', imgSrc);
-  });
+    await image.setAttribute('src', imgSrc);
+  }
 };
 
 const initMasonaryGrid = () => {
@@ -96,20 +95,15 @@ const handleResize = debounce(() => {
   gallery.classList.add('gallery--gradient');
 }, 300);
 
-const handleLoadGallery = debounce(async () => {
-  if (hasScrolled) return;
-  hasScrolled = true;
-  console.log('scroll');
-
+const handleGalleryObserver = async () => {
   await handleGalleryLoad();
   const macy = await initMasonaryGrid();
 
-  macy.runOnImageLoad(handleResize);
-  macy.on(macy.constants.EVENT_RESIZE, handleResize);
-}, 300);
+  await macy.runOnImageLoad(handleResize);
+  await macy.on(macy.constants.EVENT_RESIZE, handleResize);
+};
 
-document.addEventListener('scroll', handleLoadGallery);
-showSection(gallery);
+showSection(gallery, handleGalleryObserver);
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 
