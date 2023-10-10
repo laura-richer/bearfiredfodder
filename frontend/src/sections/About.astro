@@ -16,6 +16,19 @@ const { title, copy, image, id } = Astro.props;
   </div>
 </section>
 
+<script>
+import createIntersectionObserver from '@/utils/create-intersection-observer';
+
+const about = document.querySelector('.about__content');
+
+const handleAboutIntersection = () => {
+  about.style.opacity = 1;
+  about.style.transform = 'translateY(0)';
+};
+
+createIntersectionObserver(about, handleAboutIntersection);
+</script>
+
 <style lang="scss">
   @import '@/scss/resources/container';
 
@@ -34,6 +47,10 @@ const { title, copy, image, id } = Astro.props;
 
     &__content {
       @include container-padding;
+
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-in-out;
       @media screen and (min-width: 768px) {
         max-width: 50%;
         padding-right: var(--spacer-l);

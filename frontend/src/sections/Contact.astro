@@ -23,6 +23,19 @@ const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } =
   </div>
 </section>
 
+<script>
+import createIntersectionObserver from '@/utils/create-intersection-observer';
+
+const contact = document.querySelector('.contact__container');
+
+const handleContactIntersection = () => {
+  contact.style.opacity = 1;
+  contact.style.transform = 'translateY(0)';
+};
+
+createIntersectionObserver(contact, handleContactIntersection);
+</script>
+
 <style lang="scss">
   .contact {
     background-color: var(--color-black);
@@ -31,6 +44,9 @@ const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } =
     &__container {
       padding-top: var(--spacer-m);
       padding-bottom: var(--spacer-m);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-in-out;
     }
 
     &__details {
