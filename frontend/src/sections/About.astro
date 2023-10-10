@@ -17,16 +17,10 @@ const { title, copy, image, id } = Astro.props;
 </section>
 
 <script>
-import createIntersectionObserver from '@/utils/create-intersection-observer';
+import showSection from '@/utils/show-section';
 
 const about = document.querySelector('.about__content');
-
-const handleAboutIntersection = () => {
-  about.style.opacity = 1;
-  about.style.transform = 'translateY(0)';
-};
-
-createIntersectionObserver(about, handleAboutIntersection);
+showSection(about);
 </script>
 
 <style lang="scss">

@@ -23,7 +23,7 @@ const { title, images, id } = Astro.props;
 <script>
 import debounce from 'lodash/debounce';
 import Macy from 'macy';
-import createIntersectionObserver from '@/utils/create-intersection-observer';
+import showSection from '@/utils/show-section';
 
 const gallery = document.querySelector('.gallery');
 const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
@@ -104,7 +104,7 @@ const handleGalleryIntersection = async () => {
   galleryImageWrapper.style.opacity = 1;
 };
 
-createIntersectionObserver(gallery, handleGalleryIntersection);
+showSection(gallery, handleGalleryIntersection);
 loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 

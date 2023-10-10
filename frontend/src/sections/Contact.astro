@@ -24,16 +24,10 @@ const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } =
 </section>
 
 <script>
-import createIntersectionObserver from '@/utils/create-intersection-observer';
+import showSection from '@/utils/show-section';
 
 const contact = document.querySelector('.contact__container');
-
-const handleContactIntersection = () => {
-  contact.style.opacity = 1;
-  contact.style.transform = 'translateY(0)';
-};
-
-createIntersectionObserver(contact, handleContactIntersection);
+showSection(contact);
 </script>
 
 <style lang="scss">

@@ -41,16 +41,10 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 </section>
 
 <script>
-import createIntersectionObserver from '@/utils/create-intersection-observer';
+import showSection from '@/utils/show-section';
 
 const menu = document.querySelector('.menu__container');
-
-const handleMenuIntersection = () => {
-  menu.style.opacity = 1;
-  menu.style.transform = 'translateY(0)';
-};
-
-createIntersectionObserver(menu, handleMenuIntersection);
+showSection(menu);
 </script>
 
 <style lang="scss">
