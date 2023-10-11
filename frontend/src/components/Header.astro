@@ -15,7 +15,7 @@ const { headerNavItems } = Astro.props;
       <nav class="header__nav-items" id="header__nav-items">
         {
           headerNavItems.map(navItem => (
-            <div class="header__nav-item">
+            <div class="header__nav-list-item header__nav-item">
               <a class="header__nav-link" href={`#${navItem.link}`}>
                 {navItem.name}
               </a>
@@ -136,7 +136,7 @@ window.addEventListener('resize', handleResize);
       font-weight: var(--font-weight-semibold);
     }
 
-    &__nav-item {
+    &__nav-list-item {
       padding: var(--spacer-s) 3rem;
 
       &:first-child {
