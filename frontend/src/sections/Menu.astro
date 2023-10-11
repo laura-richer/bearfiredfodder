@@ -1,13 +1,14 @@
 ---
 import getUrlForImage from '@/utils/getUrlForImage';
 
-const { title, copy, backgroundImage, menuItems, id } = Astro.props;
+const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 ---
 
 <section
   id={id}
   class="menu"
-  style=`background-image: url(${getUrlForImage(backgroundImage).url()})`
+  data-desktop-image={`${getUrlForImage(image).url()}?q=80`}
+  data-mobile-image={`${getUrlForImage(mobileImage).url()}?w=768&q=80`}
 >
   <div class="menu__overlay"></div>
   <div class="container menu__container">
@@ -41,10 +42,28 @@ const { title, copy, backgroundImage, menuItems, id } = Astro.props;
 </section>
 
 <script>
+import debounce from 'lodash/debounce';
+import setImage from '@/utils/set-image';
 import showSection from '@/utils/show-section';
 
-const menu = document.querySelector('.menu__container');
-showSection(menu);
+const menu = document.querySelector('.menu');
+const menuContainer = document.querySelector('.menu__container');
+const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
+  '--breakpoint-tablet'
+);
+
+const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
+let mobileBreakpoint = setMobileBreakpoint();
+
+const handleResize = debounce(() => {
+  mobileBreakpoint = setMobileBreakpoint();
+  setImage(menu, mobileBreakpoint);
+}, 300);
+
+setImage(menu, mobileBreakpoint);
+showSection(menuContainer);
+
+window.addEventListener('resize', handleResize);
 </script>
 
 <style lang="scss">

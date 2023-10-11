@@ -1,12 +1,8 @@
-import getUrlForImage from '@/utils/getUrlForImage';
+export default (targetElement, mobileBreakpoint) => {
+  const {
+    dataset: { desktopImage, mobileImage },
+  } = targetElement;
 
-export default (image, mobileImage) => {
-  const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
-    '--breakpoint-desktop'
-  );
-
-  console.log(image);
-  console.log(mobileImage);
-  // return getUrlForImage(image).url();
-  return breakpoint;
+  const image = mobileBreakpoint && mobileImage ? mobileImage : desktopImage;
+  targetElement.style.backgroundImage = `url(${image})`;
 };

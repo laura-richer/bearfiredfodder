@@ -87,8 +87,14 @@ export default defineType({
       group: 'menu',
     }),
     defineField({
-      name: 'menuBackgroundImage',
+      name: 'menuImage',
       title: 'Background Image',
+      type: 'image',
+      group: 'menu',
+    }),
+    defineField({
+      name: 'menuImageMobile',
+      title: 'Background Image Mobile',
       type: 'image',
       group: 'menu',
     }),

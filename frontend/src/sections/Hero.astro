@@ -6,7 +6,7 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 ---
 
 <section class="hero">
-  <div class="hero__inner" style=`background-image: url(${getUrlForImage(image).url()})`>
+  <div class="hero__inner" data-desktop-image={`${getUrlForImage(image).url()}?q=80`} data-mobile-image={`${getUrlForImage(mobileImage).url()}?w=768&q=80`}>
     <div class="hero__content">
       <h1 class="hero__title">{title}</h1>
       <Button text="See our menu" link={`#${menuLink}`} />
@@ -15,10 +15,28 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 </section>
 
 <script>
+import debounce from 'lodash/debounce';
+import setImage from '@/utils/set-image';
 import showSection from '@/utils/show-section';
 
 const hero = document.querySelector('.hero__content');
+const heroInner = document.querySelector('.hero__inner');
+const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
+  '--breakpoint-tablet'
+);
+
+const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
+let mobileBreakpoint = setMobileBreakpoint();
+
+const handleResize = debounce(() => {
+  mobileBreakpoint = setMobileBreakpoint();
+  setImage(heroInner, mobileBreakpoint);
+}, 300);
+
+setImage(heroInner, mobileBreakpoint);
 showSection(hero);
+
+window.addEventListener('resize', handleResize);
 </script>
 
 <style lang="scss">
