@@ -38,21 +38,21 @@ const { headerNavItems } = Astro.props;
 <script>
   const menuButton = document.querySelector('#menuToggleButton');
   const headerNavItemsContainer = document.querySelector('#header__nav-items');
-  let menuActive = false;
+  const headerNavItems = document.querySelectorAll('.header__nav-item');
+
+  const handleMenuToggle = () => {
+    menuButton.classList.toggle('header__nav-toggle--active');
+    headerNavItemsContainer.classList.toggle('header__nav-items--active');
+  };
 
   const handleMenuClose = () => {
     menuButton.classList.remove('header__nav-toggle--active');
     headerNavItemsContainer.classList.remove('header__nav-items--active');
   };
 
-  const handleMenuToggle = () => {
-    menuButton.classList.toggle('header__nav-toggle--active');
-    headerNavItemsContainer.classList.toggle('header__nav-items--active');
-    menuActive = !menuActive;
-
-    if (menuActive) document.body.addEventListener('click', handleMenuClose);
-    else document.body.removeEventListener('click', handleMenuClose);
-  };
+  headerNavItems.forEach(item => {
+    item.addEventListener('click', handleMenuClose);
+  });
 
   menuButton.addEventListener('click', handleMenuToggle);
 </script>
