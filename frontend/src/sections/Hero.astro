@@ -6,7 +6,7 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 ---
 
 <section class="hero">
-  <div class="hero__inner" data-desktop-image={getUrlForImage(image).url()} data-mobile-image={getUrlForImage(mobileImage).url()}>
+  <div class="hero__inner" data-desktop-image={getUrlForImage(image)} data-mobile-image={getUrlForImage(mobileImage)}>
     <div class="hero__content">
       <h1 class="hero__title">{title}</h1>
       <Button text="See our menu" link={`#${menuLink}`} />

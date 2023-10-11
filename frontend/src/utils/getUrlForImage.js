@@ -4,5 +4,5 @@ import sanityClient from '~sanity.config';
 const builder = imageUrlBuilder(sanityClient);
 
 export default source => {
-  return builder.image(source);
+  return builder.image(source).url();
 };
