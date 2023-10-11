@@ -8,7 +8,7 @@ const { headerNavItems } = Astro.props;
 <header class="header">
   <div class="header__container">
     <a href="#">
-      <img src="/bff-logo.png" class="header__logo" alt="Bear Fired Fodder" width="90" height="100"/>
+      <img src="/bff-logo.png" class="header__logo header__nav-item" alt="Bear Fired Fodder" width="90" height="100"/>
     </a>
 
     <div class="header__nav">
@@ -24,7 +24,7 @@ const { headerNavItems } = Astro.props;
         }
       </nav>
 
-      <div class="header__nav-cta">
+      <div class="header__nav-cta header__nav-item">
         <Button text="Get in touch" link={`#${headerNavItems[3].link}`} />
       </div>
 
@@ -36,25 +36,39 @@ const { headerNavItems } = Astro.props;
 </header>
 
 <script>
-  const menuButton = document.querySelector('#menuToggleButton');
-  const headerNavItemsContainer = document.querySelector('#header__nav-items');
-  const headerNavItems = document.querySelectorAll('.header__nav-item');
+import debounce from 'lodash/debounce';
 
-  const handleMenuToggle = () => {
-    menuButton.classList.toggle('header__nav-toggle--active');
-    headerNavItemsContainer.classList.toggle('header__nav-items--active');
-  };
+const menuButton = document.querySelector('#menuToggleButton');
+const headerNavItemsContainer = document.querySelector('#header__nav-items');
+const headerNavItems = document.querySelectorAll('.header__nav-item');
+const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
+  '--breakpoint-desktop'
+);
 
-  const handleMenuClose = () => {
-    menuButton.classList.remove('header__nav-toggle--active');
-    headerNavItemsContainer.classList.remove('header__nav-items--active');
-  };
+const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
+let mobileBreakpoint = setMobileBreakpoint();
 
-  headerNavItems.forEach(item => {
-    item.addEventListener('click', handleMenuClose);
-  });
+const handleMenuToggle = () => {
+  menuButton.classList.toggle('header__nav-toggle--active');
+  headerNavItemsContainer.classList.toggle('header__nav-items--active');
+};
 
-  menuButton.addEventListener('click', handleMenuToggle);
+const handleMenuClose = () => {
+  menuButton.classList.remove('header__nav-toggle--active');
+  headerNavItemsContainer.classList.remove('header__nav-items--active');
+};
+
+const handleResize = debounce(() => {
+  mobileBreakpoint = setMobileBreakpoint();
+}, 300);
+
+headerNavItems.forEach(item => {
+  if (!mobileBreakpoint) return;
+  item.addEventListener('click', handleMenuClose);
+});
+
+menuButton.addEventListener('click', handleMenuToggle);
+window.addEventListener('resize', handleResize);
 </script>
 
 <style lang="scss" is:global>
