@@ -48,6 +48,8 @@ showSection(menu);
 </script>
 
 <style lang="scss">
+  @import '@/scss/resources/breakpoints';
+
   .menu {
     position: relative;
     background: no-repeat center bottom;
@@ -82,14 +84,14 @@ showSection(menu);
       gap: var(--spacer-m);
       flex-direction: column;
 
-      @media screen and (min-width: 768px) {
+      @media screen and (min-width: $breakpoint-tablet) {
         flex-direction: row;
         gap: var(--spacer-l);
       }
     }
 
     &__copy {
-      @media screen and (min-width: 768px) {
+      @media screen and (min-width: $breakpoint-tablet) {
         flex: 0 0 33%;
       }
     }
@@ -98,10 +100,9 @@ showSection(menu);
       display: grid;
       gap: var(--spacer-m);
 
-      @media screen and (min-width: 768px) {
+      @media screen and (min-width: $breakpoint-tablet) {
         flex-grow: 1;
         grid-template-columns: 1fr 1fr;
-        // gap: var(--spacer-l);
       }
     }
 

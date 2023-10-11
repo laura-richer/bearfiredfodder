@@ -72,6 +72,7 @@ window.addEventListener('resize', handleResize);
 </script>
 
 <style lang="scss" is:global>
+  @import '@/scss/resources/breakpoints';
   @import '@/scss/resources/container';
   @import '@/scss/resources/hover-state';
 
@@ -103,7 +104,7 @@ window.addEventListener('resize', handleResize);
       border: none;
       padding: 0;
       cursor: pointer;
-      @media screen and (min-width: 540px) {
+      @media screen and (min-width: $breakpoint-mobile) {
         display: none;
       }
     }
@@ -111,7 +112,7 @@ window.addEventListener('resize', handleResize);
     &__nav-items {
       display: block;
 
-      @media screen and (max-width: 539px) {
+      @media screen and (max-width: calc($breakpoint-mobile - 1px)) {
         position: absolute;
         top: var(--header-height);
         left: 0;
@@ -127,7 +128,7 @@ window.addEventListener('resize', handleResize);
         }
       }
 
-      @media screen and (min-width: 540px) {
+      @media screen and (min-width: $breakpoint-mobile) {
         display: flex;
         gap: var(--spacer-m);
       }
@@ -147,7 +148,7 @@ window.addEventListener('resize', handleResize);
         padding-bottom: 3rem;
       }
 
-      @media screen and (min-width: 540px) {
+      @media screen and (min-width: $breakpoint-mobile) {
         padding: 0 !important;
       }
     }
@@ -165,7 +166,7 @@ window.addEventListener('resize', handleResize);
     &__nav-cta {
       margin-right: var(--spacer-s);
 
-      @media screen and (min-width: 540px) {
+      @media screen and (min-width: $breakpoint-mobile) {
         display: none;
       }
     }

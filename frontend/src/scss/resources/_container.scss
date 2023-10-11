@@ -14,7 +14,7 @@
   padding-top: var(--spacer-l);
   padding-bottom: var(--spacer-l);
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: $breakpoint-desktop) {
     padding-top: var(--spacer-xl);
     padding-bottom: var(--spacer-xl);
   }
