@@ -16,7 +16,7 @@ export default (targetElement, callback) => {
       });
     },
     {
-      threshold: 0.2,
+      threshold: 0.15,
     }
   );
 
