@@ -6,6 +6,7 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 ---
 
 <section class="hero">
+  {imageHandler.getDimensions(image)}
   <div class="hero__inner" data-desktop-image={imageHandler.getUrl(image)} data-mobile-image={imageHandler.getUrl(mobileImage)}>
     <div class="hero__content">
       <h1 class="hero__title">{title}</h1>

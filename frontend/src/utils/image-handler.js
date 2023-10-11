@@ -8,7 +8,14 @@ const getUrl = source => {
 };
 
 const getDimensions = source => {
-  console.log(source.asset._ref);
+  const {
+    asset: { _ref: reference },
+  } = source;
+
+  const pattern = /^image-([\da-f]+)-(\d+x\d+)-(\w+)$/;
+  const dimensions = pattern.exec(reference)[2];
+  const [width, height] = dimensions.split('x').map(v => Number.parseInt(v, 10));
+  return { width, height };
 };
 
 export { getUrl, getDimensions };
