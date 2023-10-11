@@ -48,11 +48,10 @@ const { headerNavItems } = Astro.props;
   const handleMenuToggle = () => {
     menuButton.classList.toggle('header__nav-toggle--active');
     headerNavItemsContainer.classList.toggle('header__nav-items--active');
+    menuActive = !menuActive;
 
     if (menuActive) document.body.addEventListener('click', handleMenuClose);
     else document.body.removeEventListener('click', handleMenuClose);
-
-    menuActive = !menuActive;
   };
 
   menuButton.addEventListener('click', handleMenuToggle);
