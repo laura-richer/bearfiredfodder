@@ -1,5 +1,6 @@
 ---
-import getUrlForImage from '@/utils/getUrlForImage';
+import { Image } from "astro:assets";
+import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, id } = Astro.props;
 ---
@@ -12,7 +13,7 @@ const { title, copy, image, id } = Astro.props;
     </div>
   </div>
   <div class="about__image">
-    <img class="about__image-el" alt="Cooking Wood fired pizza" src={getUrlForImage(image)} />
+    <img class="about__image-el" alt="Cooking Wood fired pizza" src={imageHandler.getUrl(image)} />
   </div>
 </section>
 
@@ -112,3 +113,5 @@ showSection(about);
     }
   }
 </style>
+@/utils/get-url-for-image
+@/utils/image-handler

@@ -1,5 +1,5 @@
 ---
-import getUrlForImage from '@/utils/getUrlForImage';
+import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 ---
@@ -7,8 +7,8 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 <section
   id={id}
   class="menu"
-  data-desktop-image={getUrlForImage(image)}
-  data-mobile-image={getUrlForImage(mobileImage)}
+  data-desktop-image={imageHandler.getUrl(image)}
+  data-mobile-image={imageHandler.getUrl(mobileImage)}
 >
   <div class="menu__overlay"></div>
   <div class="container menu__container">
@@ -139,3 +139,5 @@ showSection(menuContainer);
     }
   }
 </style>
+@/utils/get-url-for-image
+@/utils/image-handler

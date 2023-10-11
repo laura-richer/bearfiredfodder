@@ -3,6 +3,12 @@ import sanityClient from '~sanity.config';
 
 const builder = imageUrlBuilder(sanityClient);
 
-export default source => {
+const getUrl = source => {
   return builder.image(source).url();
 };
+
+const getDimensions = source => {
+  console.log(source.asset._ref);
+};
+
+export { getUrl, getDimensions };
