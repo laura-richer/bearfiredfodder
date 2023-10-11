@@ -18,25 +18,22 @@ const { title, image, mobileImage, menuLink } = Astro.props;
 import debounce from 'lodash/debounce';
 import setImage from '@/utils/set-image';
 import showSection from '@/utils/show-section';
+import addResizeListener from '@/utils/resize-handler';
+import detectBreakpoint from '@/utils/detect-breakpoint';
 
 const hero = document.querySelector('.hero__content');
 const heroInner = document.querySelector('.hero__inner');
-const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
-  '--breakpoint-tablet'
-);
-
-const setMobileBreakpoint = () => !window.matchMedia(`(min-width: ${breakpoint})`).matches;
-let mobileBreakpoint = setMobileBreakpoint();
+const detectScreenSize = 'tablet';
+let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 
 const handleResize = debounce(() => {
-  mobileBreakpoint = setMobileBreakpoint();
+  mobileBreakpoint = detectBreakpoint(detectScreenSize);
   setImage(heroInner, mobileBreakpoint);
 }, 300);
 
+addResizeListener(handleResize);
 setImage(heroInner, mobileBreakpoint);
 showSection(hero);
-
-window.addEventListener('resize', handleResize);
 </script>
 
 <style lang="scss">
