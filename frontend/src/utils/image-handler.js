@@ -3,9 +3,7 @@ import sanityClient from '~sanity.config';
 
 const builder = imageUrlBuilder(sanityClient);
 
-const getUrl = source => {
-  return builder.image(source).url();
-};
+const getUrl = source => builder.image(source).url();
 
 const getDimensions = source => {
   const {
@@ -15,6 +13,7 @@ const getDimensions = source => {
   const pattern = /^image-([\da-f]+)-(\d+x\d+)-(\w+)$/;
   const dimensions = pattern.exec(reference)[2];
   const [width, height] = dimensions.split('x').map(v => Number.parseInt(v, 10));
+
   return { width, height };
 };
 
