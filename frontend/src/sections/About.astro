@@ -13,8 +13,12 @@ const { title, copy, image, id } = Astro.props;
     </div>
   </div>
   <div class="about__image">
-    <!-- <img class="about__image-el" alt="Cooking Wood fired pizza" src={imageHandler.getUrl(image)} /> -->
-    <Image src={imageHandler.getUrl(image)} width={imageHandler.getDimensions(image).width} height={imageHandler.getDimensions(image).height} class="about__image-el" alt="Cooking Wood fired pizza" />
+    <Image
+      src={`${imageHandler.getUrl(image)}?w=768&q=80`}
+      width={imageHandler.getDimensions(image).width}
+      height={imageHandler.getDimensions(image).height}
+      class="about__image-el" alt="Cooking Wood fired pizza"
+    />
   </div>
 </section>
 

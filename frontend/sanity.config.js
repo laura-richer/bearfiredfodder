@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// TODO tokenise API
 export default sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: 'production',
