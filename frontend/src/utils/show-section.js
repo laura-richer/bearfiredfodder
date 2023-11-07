@@ -1,6 +1,7 @@
 const revealElement = targetElement => {
-  targetElement.style.opacity = 1;
-  targetElement.style.transform = 'translateY(0)';
+  const element = targetElement;
+  element.style.opacity = 1;
+  element.style.transform = 'translateY(0)';
 };
 
 export default (targetElement, callback) => {

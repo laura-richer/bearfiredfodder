@@ -4,5 +4,7 @@ export default (targetElement, mobileBreakpoint) => {
   } = targetElement;
 
   const image = mobileBreakpoint && mobileImage ? mobileImage : desktopImage;
-  targetElement.style.backgroundImage = `url(${image})`;
+
+  const element = targetElement;
+  element.style.backgroundImage = `url(${image})`;
 };

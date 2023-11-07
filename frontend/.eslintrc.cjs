@@ -1,3 +1,5 @@
+const path = require('node:path');
+
 module.exports = {
   extends: [
     'plugin:astro/recommended',
@@ -18,16 +20,8 @@ module.exports = {
     extends: 'airbnb-base',
     requireConfigFile: false,
     sourceType: 'module',
-  },
-  settings: {
-    'import/resolver': {
-      alias: {
-        map: [
-          ['@/', './src/'],
-          ['~', './'],
-        ],
-        extensions: ['.astro', '.js', '.jsx', '.json'],
-      },
+    ecmaFeatures: {
+      jsx: true,
     },
   },
   ignorePatterns: ['/scss/*', '/assets/*'],
@@ -37,6 +31,17 @@ module.exports = {
       parser: 'astro-eslint-parser',
     },
   ],
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@/', path.resolve(__dirname, './src')],
+          ['~', path.resolve(__dirname, './')],
+        ],
+        extensions: ['.astro', '.js', '.jsx', '.json'],
+      },
+    },
+  },
   rules: {
     'i18n-text/no-en': 0,
     'compat/compat': ['warn'],
