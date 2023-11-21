@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets";
-import Logo from '@/icons/Logo.astro';
+import bffLogo from '@/assets/bff-logo.png';
+import IconBurger from '@/icons/IconBurger.astro';
 import Button from '@/components/Button.astro';
 
 const { headerNavItems } = Astro.props;
@@ -9,7 +9,7 @@ const { headerNavItems } = Astro.props;
 <header class="header">
   <div class="header__container">
     <a href="#">
-      <Image src="/bff-logo.png" class="header__logo header__nav-item" alt="Bear Fired Fodder" width="90" height="100"/>
+      <img src={bffLogo.src} class="header__logo header__nav-item" alt="Bear Fired Fodder" width="90" height="100"/>
     </a>
 
     <div class="header__nav">
@@ -30,7 +30,7 @@ const { headerNavItems } = Astro.props;
       </div>
 
       <button id="menuToggleButton" class="header__nav-toggle" aria-label="Toggle navigation">
-        <Logo />
+        <IconBurger />
       </button>
     </div>
   </div>
