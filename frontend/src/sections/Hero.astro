@@ -27,10 +27,15 @@ import detectBreakpoint from '@/utils/detect-breakpoint';
 
 const hero = document.querySelector('.hero__content');
 const heroInner = document.querySelector('.hero__inner');
+
 const detectScreenSize = 'tablet';
 let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 
 const handleResize = debounce(() => {
+  const resizeBreakpoint = detectBreakpoint(detectScreenSize);
+
+  if (mobileBreakpoint === resizeBreakpoint) return;
+
   mobileBreakpoint = detectBreakpoint(detectScreenSize);
   setImage(heroInner, mobileBreakpoint);
 }, 300);
