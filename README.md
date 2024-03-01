@@ -7,6 +7,7 @@ Astro stuff found in `/frontend`
 
 ### Prerequisites
 - nvm
+- npm
 - pnpm
 
 ### Getting set up
