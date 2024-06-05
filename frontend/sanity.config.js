@@ -6,6 +6,6 @@ dotenv.config();
 export default sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: 'production',
-  useCdn: true,
+  useCdn: false,
   token: process.env.API_TOKEN,
 });
