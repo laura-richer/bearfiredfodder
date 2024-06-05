@@ -1,4 +1,4 @@
-# Bearfiredfodder
+# Bear Fired Fodder
 
 Built from a combination of Sanity studio powering the backend and an Astro frontend.
 
