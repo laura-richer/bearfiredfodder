@@ -2,6 +2,9 @@
 import bffLogo from '@/assets/bff-logo.png';
 import IconBurger from '@/icons/IconBurger.astro';
 import Button from '@/components/Button.astro';
+import header from './header.js';
+
+header();
 
 const { headerNavItems } = Astro.props;
 ---
@@ -42,7 +45,7 @@ const { headerNavItems } = Astro.props;
   </div>
 </header>
 
-<script>
+<!-- <script>
   import debounce from 'debounce';
   import detectBreakpoint from '@/utils/detect-breakpoint';
   import addResizeListener from '@/utils/resize-handler';
@@ -74,7 +77,7 @@ const { headerNavItems } = Astro.props;
 
   menuButton.addEventListener('click', handleMenuToggle);
   addResizeListener(handleResize);
-</script>
+</script> -->
 
 <style lang="scss" is:global>
   @import '@/scss/resources/breakpoints';
