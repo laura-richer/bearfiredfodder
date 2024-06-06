@@ -24,9 +24,8 @@ const { title, copy, image, id } = Astro.props;
 </section>
 
 <script>
-import showSection from '@/utils/show-section';
-  const about = document.querySelector('.about__content');
-  showSection(about);
+  import showSection from '@/utils/show-section';
+  showSection('.about__content');
 </script>
 
 <style lang="scss">

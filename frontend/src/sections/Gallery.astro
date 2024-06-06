@@ -36,7 +36,7 @@ const { title, images, id } = Astro.props;
 </section>
 
 <script>
-  import debounce from 'lodash/debounce';
+  import debounce from 'debounce';
   import Macy from 'macy';
   import detectBreakpoint from '@/utils/detect-breakpoint';
   import showSection from '@/utils/show-section';
@@ -124,7 +124,7 @@ const { title, images, id } = Astro.props;
     await macy.on(macy.constants.EVENT_RESIZE, handleResize);
   };
 
-  showSection(gallery, handleGalleryObserver);
+  showSection('.gallery', handleGalleryObserver);
   loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 

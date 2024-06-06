@@ -42,14 +42,13 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 </section>
 
 <script>
-  import debounce from 'lodash/debounce';
+  import debounce from 'debounce';
   import setImage from '@/utils/set-image';
   import showSection from '@/utils/show-section';
   import addResizeListener from '@/utils/resize-handler';
   import detectBreakpoint from '@/utils/detect-breakpoint';
 
   const menu = document.querySelector('.menu');
-  const menuContainer = document.querySelector('.menu__container');
   const detectScreenSize = 'tablet';
   let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 
@@ -60,7 +59,7 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 
   addResizeListener(handleResize);
   setImage(menu, mobileBreakpoint);
-  showSection(menuContainer);
+  showSection('.menu__container');
 </script>
 
 <style lang="scss">
