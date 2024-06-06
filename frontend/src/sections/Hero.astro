@@ -1,11 +1,8 @@
 ---
-import heroJs from './hero.js';
 import * as imageHandler from '@/utils/image-handler';
 import Button from '@/components/Button.astro';
 
 const { title, image, mobileImage, menuLink } = Astro.props;
-
-heroJs();
 ---
 
 <section class="hero">
@@ -21,7 +18,7 @@ heroJs();
   </div>
 </section>
 
-<!-- <script>
+<script>
   import debounce from 'debounce';
   import setImage from '@/utils/set-image';
   import showSection from '@/utils/show-section';
@@ -45,7 +42,7 @@ heroJs();
   addResizeListener(handleResize);
   setImage(heroInner, mobileBreakpoint);
   showSection('.hero__content');
-</script> -->
+</script>
 
 <style lang="scss">
   @import '@/scss/resources/container';

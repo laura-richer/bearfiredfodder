@@ -1,12 +1,8 @@
 ---
-import aboutJs from './about.js';
-
 import { Image } from 'astro:assets';
 import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, id } = Astro.props;
-
-aboutJs();
 ---
 
 <section id={id} class="about">
@@ -27,10 +23,10 @@ aboutJs();
   </div>
 </section>
 
-<!-- <script>
+<script>
   import showSection from '@/utils/show-section';
   showSection('.about__content');
-</script> -->
+</script>
 
 <style lang="scss">
   @import '@/scss/resources/breakpoints';
