@@ -1,7 +1,10 @@
 ---
+import menuJs from './menu.js';
 import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
+
+menuJs();
 ---
 
 <section
@@ -41,7 +44,7 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
   </div>
 </section>
 
-<script>
+<!-- <script>
   import debounce from 'debounce';
   import setImage from '@/utils/set-image';
   import showSection from '@/utils/show-section';
@@ -60,7 +63,7 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
   addResizeListener(handleResize);
   setImage(menu, mobileBreakpoint);
   showSection('.menu__container');
-</script>
+</script> -->
 
 <style lang="scss">
   @import '@/scss/resources/breakpoints';

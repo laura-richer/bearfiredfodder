@@ -1,12 +1,12 @@
 ---
+import headerJs from './header.js';
 import bffLogo from '@/assets/bff-logo.png';
 import IconBurger from '@/icons/IconBurger.astro';
 import Button from '@/components/Button.astro';
-import header from './header.js';
-
-header();
 
 const { headerNavItems } = Astro.props;
+
+headerJs();
 ---
 
 <header class="header">

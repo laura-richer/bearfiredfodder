@@ -1,7 +1,10 @@
 ---
+import contactJs from './contact.js';
 import ContactItem from '@/components/ContactItem.astro';
 
 const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } = Astro.props;
+
+contactJs();
 ---
 
 <section id={id} class="contact">
@@ -23,10 +26,7 @@ const { title, phoneNumber, emailAddress, instagramHandle, instagramLink, id } =
   </div>
 </section>
 
-<script>
-  import showSection from '@/utils/show-section';
-  showSection('.contact__container');
-</script>
+<script></script>
 
 <style lang="scss">
   .contact {

@@ -1,46 +1,9 @@
----
-import * as imageHandler from '@/utils/image-handler';
-import Button from '@/components/Button.astro';
-import LoadingSpinner from '@/components/LoadingSpinner.astro';
+import debounce from 'debounce';
+import Macy from 'macy';
+import detectBreakpoint from '@/utils/detect-breakpoint';
+import showSection from '@/utils/show-section';
 
-const { title, images, id } = Astro.props;
----
-
-<section id={id} class="gallery">
-  <div class="container gallery__container">
-    <h2>{title}</h2>
-    <LoadingSpinner class="gallery__loading" />
-
-    <div class="gallery__inner">
-      <div class="gallery__image-wrapper">
-        <div id="gallery-masonary-container" class="gallery__images">
-          {
-            images
-              .reverse()
-              .map(image => (
-                <img
-                  class="gallery__image"
-                  data-src={`${imageHandler.getUrl(image)}`}
-                  alt={image.alt || images[0]._key}
-                />
-              ))
-          }
-        </div>
-      </div>
-
-      <div class="gallery__load-more">
-        <Button tag="button" text="Load more" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  import debounce from 'debounce';
-  import Macy from 'macy';
-  import detectBreakpoint from '@/utils/detect-breakpoint';
-  import showSection from '@/utils/show-section';
-
+export default () => {
   const gallery = document.querySelector<HTMLElement>('.gallery');
   const galleryContainer = document.querySelector<HTMLElement>('.gallery__inner');
   const galleryImageWrapper = document.querySelector<HTMLElement>('.gallery__image-wrapper');
@@ -126,59 +89,4 @@ const { title, images, id } = Astro.props;
 
   showSection('.gallery', handleGalleryObserver);
   loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
-</script>
-
-<style lang="scss" is:global>
-  .gallery {
-    position: relative;
-    background: var(--color-grey) url('/images/bff-flame-cutoff-gallery.png') no-repeat left bottom;
-    background-size: auto 270px;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-
-    &--gradient {
-      &:after {
-        position: absolute;
-        content: '';
-        width: 100%;
-        height: 100px;
-        background: transparent;
-        background: linear-gradient(
-          0deg,
-          rgba(2, 0, 36, 1) 0%,
-          rgba(48, 48, 48, 1) 0%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        bottom: 0;
-        left: 0;
-      }
-    }
-
-    &__container {
-      padding-bottom: 0;
-    }
-
-    &__inner {
-      opacity: 0;
-    }
-
-    &__image-wrapper {
-      position: relative;
-      max-height: var(--gallery-height);
-      overflow: hidden;
-      transition: max-height 0.5s ease-in-out;
-    }
-
-    &__load-more {
-      display: flex;
-      position: absolute;
-      justify-content: center;
-      left: 0;
-      right: 0;
-      bottom: var(--spacer-s);
-      z-index: 9999;
-      margin: auto;
-      cursor: pointer;
-    }
-  }
-</style>
+};
