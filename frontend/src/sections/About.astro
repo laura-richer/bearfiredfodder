@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets';
 import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, id } = Astro.props;
@@ -17,16 +17,16 @@ const { title, copy, image, id } = Astro.props;
       src={`${imageHandler.getUrl(image)}?w=768&q=80`}
       width={imageHandler.getDimensions(image).width}
       height={imageHandler.getDimensions(image).height}
-      class="about__image-el" alt="Cooking Wood fired pizza"
+      class="about__image-el"
+      alt="Cooking Wood fired pizza"
     />
   </div>
 </section>
 
 <script>
 import showSection from '@/utils/show-section';
-
-const about = document.querySelector('.about__content');
-showSection(about);
+  const about = document.querySelector('.about__content');
+  showSection(about);
 </script>
 
 <style lang="scss">

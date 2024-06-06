@@ -9,12 +9,22 @@ const { title, images, id } = Astro.props;
 <section id={id} class="gallery">
   <div class="container gallery__container">
     <h2>{title}</h2>
-    <LoadingSpinner class="gallery__loading"/>
+    <LoadingSpinner class="gallery__loading" />
 
     <div class="gallery__inner">
       <div class="gallery__image-wrapper">
         <div id="gallery-masonary-container" class="gallery__images">
-          {images.reverse().map(image => <img class="gallery__image" data-src={`${imageHandler.getUrl(image)}`} alt={image.alt || images[0]._key} />)}
+          {
+            images
+              .reverse()
+              .map(image => (
+                <img
+                  class="gallery__image"
+                  data-src={`${imageHandler.getUrl(image)}`}
+                  alt={image.alt || images[0]._key}
+                />
+              ))
+          }
         </div>
       </div>
 
@@ -26,96 +36,96 @@ const { title, images, id } = Astro.props;
 </section>
 
 <script>
-import debounce from 'lodash/debounce';
-import Macy from 'macy';
-import detectBreakpoint from '@/utils/detect-breakpoint';
-import showSection from '@/utils/show-section';
+  import debounce from 'lodash/debounce';
+  import Macy from 'macy';
+  import detectBreakpoint from '@/utils/detect-breakpoint';
+  import showSection from '@/utils/show-section';
 
-const gallery = document.querySelector('.gallery');
-const galleryContainer = document.querySelector('.gallery__inner');
-const galleryImageWrapper = document.querySelector('.gallery__image-wrapper');
-const galleryImages = document.querySelectorAll('.gallery__image');
-const galleryLoading = document.querySelector('.gallery .loading-spinner');
-const masonaryWrapper = document.querySelector('#gallery-masonary-container');
-const loadMoreButton = document.querySelector('.gallery__load-more');
-const detectScreenSize = 'desktop';
-let mobileBreakpoint = detectBreakpoint(detectScreenSize);
+  const gallery = document.querySelector<HTMLElement>('.gallery');
+  const galleryContainer = document.querySelector<HTMLElement>('.gallery__inner');
+  const galleryImageWrapper = document.querySelector<HTMLElement>('.gallery__image-wrapper');
+  const galleryImages = document.querySelectorAll<HTMLElement>('.gallery__image');
+  const galleryLoading = document.querySelector<HTMLElement>('.gallery .loading-spinner');
+  const masonaryWrapper = document.querySelector<HTMLElement>('#gallery-masonary-container');
+  const loadMoreButton = document.querySelector<HTMLElement>('.gallery__load-more');
+  const detectScreenSize = 'desktop';
+  let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 
-const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
-let initialGalleryHeight = 50;
-document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
-
-const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialGalleryHeight);
-let galleryLoadMoreTotal;
-let loadMoreCount = 1;
-
-const handleGalleryLoad = () => {
-  galleryImages.forEach(image => {
-    const imgSrc = image.dataset.src;
-    image.setAttribute('src', imgSrc);
-  });
-};
-
-const initMasonaryGrid = () => {
-  return Macy({
-    container: '#gallery-masonary-container',
-    margin: 20,
-    columns: 4,
-    breakAt: {
-      1440: 3,
-      1024: 2,
-      680: 1,
-    },
-  });
-};
-
-const resetGalleryToTop = () => {
-  galleryImageWrapper.scrollTop = 0;
-  galleryImageWrapper.style.maxHeight = `${initialGalleryHeight}px`;
-};
-
-const handleLoadMoreClick = () => {
-  loadMoreCount++;
-
-  const galleryHeight = initialGalleryHeight * loadMoreCount;
-  galleryImageWrapper.style.maxHeight = `${galleryHeight}px`;
-
-  if (loadMoreCount === galleryLoadMoreTotal) {
-    loadMoreButton.style.display = 'none';
-    gallery.classList.remove('gallery--gradient');
-  }
-};
-
-const handleResize = debounce(() => {
-  mobileBreakpoint = detectBreakpoint(detectScreenSize);
-  initialGalleryHeight = setInitialGalleryHeight();
-  galleryLoadMoreTotal = setLoadMoreTotal();
-  loadMoreCount = 1;
-
-  resetGalleryToTop();
-
+  const setInitialGalleryHeight = () => (mobileBreakpoint ? 500 : 750);
+  let initialGalleryHeight = 50;
   document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
-  loadMoreButton.style.display = 'flex';
-  gallery.classList.add('gallery--gradient');
-}, 300);
 
-const handleGalleryLoaded = async () => {
-  await handleResize();
+  const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialGalleryHeight);
+  let galleryLoadMoreTotal;
+  let loadMoreCount = 1;
 
-  galleryContainer.style.opacity = 1;
-  galleryLoading.style.display = 'none';
-};
+  const handleGalleryLoad = () => {
+    galleryImages.forEach(image => {
+      const imgSrc = image.dataset.src;
+      image.setAttribute('src', imgSrc);
+    });
+  };
 
-const handleGalleryObserver = async () => {
-  await handleGalleryLoad();
-  const macy = await initMasonaryGrid();
+  const initMasonaryGrid = () => {
+    return Macy({
+      container: '#gallery-masonary-container',
+      margin: 20,
+      columns: 4,
+      breakAt: {
+        1440: 3,
+        1024: 2,
+        680: 1,
+      },
+    });
+  };
 
-  await macy.on(macy.constants.EVENT_IMAGE_COMPLETE, handleGalleryLoaded);
-  await macy.on(macy.constants.EVENT_RESIZE, handleResize);
-};
+  const resetGalleryToTop = () => {
+    galleryImageWrapper.scrollTop = 0;
+    galleryImageWrapper.style.maxHeight = `${initialGalleryHeight}px`;
+  };
 
-showSection(gallery, handleGalleryObserver);
-loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
+  const handleLoadMoreClick = () => {
+    loadMoreCount++;
+
+    const galleryHeight = initialGalleryHeight * loadMoreCount;
+    galleryImageWrapper.style.maxHeight = `${galleryHeight}px`;
+
+    if (loadMoreCount === galleryLoadMoreTotal) {
+      loadMoreButton.style.display = 'none';
+      gallery.classList.remove('gallery--gradient');
+    }
+  };
+
+  const handleResize = debounce(() => {
+    mobileBreakpoint = detectBreakpoint(detectScreenSize);
+    initialGalleryHeight = setInitialGalleryHeight();
+    galleryLoadMoreTotal = setLoadMoreTotal();
+    loadMoreCount = 1;
+
+    resetGalleryToTop();
+
+    document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
+    loadMoreButton.style.display = 'flex';
+    gallery.classList.add('gallery--gradient');
+  }, 300);
+
+  const handleGalleryLoaded = async () => {
+    await handleResize();
+
+    galleryContainer.style.opacity = '1';
+    galleryLoading.style.display = 'none';
+  };
+
+  const handleGalleryObserver = async () => {
+    await handleGalleryLoad();
+    const macy = await initMasonaryGrid();
+
+    await macy.on(macy.constants.EVENT_IMAGE_COMPLETE, handleGalleryLoaded);
+    await macy.on(macy.constants.EVENT_RESIZE, handleResize);
+  };
+
+  showSection(gallery, handleGalleryObserver);
+  loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 </script>
 
 <style lang="scss" is:global>
@@ -128,20 +138,20 @@ loadMoreButton.addEventListener('click', () => handleLoadMoreClick());
 
     &--gradient {
       &:after {
-      position: absolute;
-      content: '';
-      width: 100%;
-      height: 100px;
-      background: transparent;
-      background: linear-gradient(
-        0deg,
-        rgba(2, 0, 36, 1) 0%,
-        rgba(48, 48, 48, 1) 0%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      bottom: 0;
-      left: 0;
-    }
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100px;
+        background: transparent;
+        background: linear-gradient(
+          0deg,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(48, 48, 48, 1) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        bottom: 0;
+        left: 0;
+      }
     }
 
     &__container {

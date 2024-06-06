@@ -11,7 +11,11 @@ Astro stuff found in `/frontend`
 - pnpm
 
 ### Getting set up
-```
+Copy the contents `.env.example` to a file named `.env`
+
+Replace the placeholder environment variables with the correct values.
+
+``` bash
 nvm use
 cd backend
 npm install
@@ -23,7 +27,7 @@ pnpm install
 ### Running the project locally
 In order to run the full project locally, you will need to run both the frontend and backend in a terminal tab.
 
-```
+``` bash
 cd backend
 npm run dev
 
