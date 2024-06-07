@@ -1,8 +1,9 @@
-@import url('./_root');
-@import url('./resources/breakpoints');
-@import url('./resources/container');
-@import url('./resources/fonts');
-@import url('./resources/hover-state');
-@import url('./base');
-@import url('./container');
-@import url('./typography');
+/* stylelint-disable-next-line scss/load-no-partial-leading-underscore */
+@import './_root';
+@import './resources/breakpoints';
+@import './resources/container';
+@import './resources/fonts';
+@import './resources/hover-state';
+@import './base';
+@import './container';
+@import './typography';
