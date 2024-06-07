@@ -18,45 +18,21 @@ const { title, image, mobileImage, menuLink } = Astro.props;
   </div>
 </section>
 
-<script>
-  import debounce from 'debounce';
-  import setImage from '@/utils/set-image';
-  import showSection from '@/utils/show-section';
-  import addResizeListener from '@/utils/resize-handler';
-  import detectBreakpoint from '@/utils/detect-breakpoint';
-
-  const heroInner = document.querySelector('.hero__inner');
-
-  const detectScreenSize = 'tablet';
-  let mobileBreakpoint = detectBreakpoint(detectScreenSize);
-
-  const handleResize = debounce(() => {
-    const resizeBreakpoint = detectBreakpoint(detectScreenSize);
-
-    if (mobileBreakpoint === resizeBreakpoint) return;
-
-    mobileBreakpoint = detectBreakpoint(detectScreenSize);
-    setImage(heroInner, mobileBreakpoint);
-  }, 300);
-
-  addResizeListener(handleResize);
-  setImage(heroInner, mobileBreakpoint);
-  showSection('.hero__content');
-</script>
+<script src="./hero.js"></script>
 
 <style lang="scss">
-  @import '@/scss/resources/container';
+  @import url('@/scss/resources/container');
 
   .hero {
-    color: var(--color-white);
     padding-top: var(--header-height);
+    color: var(--color-white);
 
     &__inner {
       display: flex;
       height: 60vh;
-      background-size: cover;
       background-position: center bottom;
       background-repeat: no-repeat;
+      background-size: cover;
     }
 
     &__content {

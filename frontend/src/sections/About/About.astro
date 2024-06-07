@@ -23,14 +23,11 @@ const { title, copy, image, id } = Astro.props;
   </div>
 </section>
 
-<script>
-  import showSection from '@/utils/show-section';
-  showSection('.about__content');
-</script>
+<script src="./about.js"></script>
 
 <style lang="scss">
-  @import '@/scss/resources/breakpoints';
-  @import '@/scss/resources/container';
+  @import url('@/scss/resources/breakpoints');
+  @import url('@/scss/resources/container');
 
   .about {
     position: relative;
@@ -66,11 +63,11 @@ const { title, copy, image, id } = Astro.props;
     &__image {
       position: relative;
 
-      &:before {
+      &::before {
         position: absolute;
+        z-index: 99;
         top: -50%;
         bottom: 0;
-        z-index: 99;
         width: 100%;
         height: 50%;
         max-height: 100%;
@@ -80,30 +77,30 @@ const { title, copy, image, id } = Astro.props;
       }
 
       @media screen and (min-width: $breakpoint-mobile) {
-        &:before {
-          height: 25%;
+        &::before {
           top: -25%;
+          height: 25%;
         }
       }
 
       @media screen and (min-width: $breakpoint-tablet) {
         position: absolute;
+        z-index: 50;
         top: 0;
         right: 0;
         bottom: 0;
-        z-index: 50;
         width: 50%;
 
-        &:before {
-          width: 100%;
-          height: 50%;
+        &::before {
           top: auto;
           left: -100%;
+          width: 100%;
+          height: 50%;
         }
 
         &-el {
-          height: 100%;
           width: 100%;
+          height: 100%;
           object-fit: cover;
         }
       }
@@ -111,7 +108,7 @@ const { title, copy, image, id } = Astro.props;
       @media screen and (min-width: $breakpoint-desktop) {
         width: 33%;
 
-        &:before {
+        &::before {
           height: 75%;
         }
       }

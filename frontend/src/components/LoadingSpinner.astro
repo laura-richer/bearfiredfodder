@@ -7,23 +7,23 @@
 
 <style lang="scss">
   .loading-spinner {
-    display: flex;
     position: relative;
-    margin: 0 auto;
+    display: flex;
     width: var(--spacer-l);
     height: var(--spacer-l);
+    margin: 0 auto;
 
     div {
-      box-sizing: border-box;
-      display: block;
       position: absolute;
+      display: block;
       width: 64px;
       height: 64px;
-      margin: 8px;
+      box-sizing: border-box;
       border: 8px solid var(--color-red);
-      border-radius: 50%;
-      animation: loading-spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
       border-color: var(--color-red) transparent transparent transparent;
+      border-radius: 50%;
+      margin: 8px;
+      animation: loading-spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
       animation-delay: -0.15s;
 
       &:nth-child(1) {
@@ -44,6 +44,7 @@
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(360deg);
     }

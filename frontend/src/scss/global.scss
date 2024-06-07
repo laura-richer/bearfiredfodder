@@ -1,10 +1,8 @@
-@import './_root.scss';
-
-@import './resources/breakpoints.scss';
-@import './resources/container.scss';
-@import './resources/fonts.scss';
-@import './resources/hover-state.scss';
-
-@import './base.scss';
-@import './container.scss';
-@import './typography.scss';
+@import url('./_root');
+@import url('./resources/breakpoints');
+@import url('./resources/container');
+@import url('./resources/fonts');
+@import url('./resources/hover-state');
+@import url('./base');
+@import url('./container');
+@import url('./typography');

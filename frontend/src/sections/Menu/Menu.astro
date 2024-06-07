@@ -41,29 +41,10 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
   </div>
 </section>
 
-<script>
-  import debounce from 'debounce';
-  import setImage from '@/utils/set-image';
-  import showSection from '@/utils/show-section';
-  import addResizeListener from '@/utils/resize-handler';
-  import detectBreakpoint from '@/utils/detect-breakpoint';
-
-  const menu = document.querySelector('.menu');
-  const detectScreenSize = 'tablet';
-  let mobileBreakpoint = detectBreakpoint(detectScreenSize);
-
-  const handleResize = debounce(() => {
-    mobileBreakpoint = detectBreakpoint(detectScreenSize);
-    setImage(menu, mobileBreakpoint);
-  }, 300);
-
-  addResizeListener(handleResize);
-  setImage(menu, mobileBreakpoint);
-  showSection('.menu__container');
-</script>
+<script src="./menu.js"></script>
 
 <style lang="scss">
-  @import '@/scss/resources/breakpoints';
+  @import url('@/scss/resources/breakpoints');
 
   .menu {
     position: relative;
@@ -77,7 +58,7 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
       height: 100%;
       background-color: var(--color-red-alpha);
 
-      &:before {
+      &::before {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -96,8 +77,8 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 
     &__content {
       display: flex;
-      gap: var(--spacer-m);
       flex-direction: column;
+      gap: var(--spacer-m);
 
       @media screen and (min-width: $breakpoint-tablet) {
         flex-direction: row;
