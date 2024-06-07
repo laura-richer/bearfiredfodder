@@ -72,9 +72,6 @@ importers:
       stylelint-config-astro:
         specifier: ^1.0.4
         version: 1.0.4(postcss-html@1.7.0)(stylelint@16.6.1(typescript@5.4.5))
-      stylelint-config-html:
-        specifier: ^1.1.0
-        version: 1.1.0(postcss-html@1.7.0)(stylelint@16.6.1(typescript@5.4.5))
       stylelint-config-idiomatic-order:
         specifier: ^10.0.0
         version: 10.0.0(stylelint@16.6.1(typescript@5.4.5))
@@ -2506,13 +2503,6 @@ packages:
 
   stylelint-config-astro@1.0.4:
     resolution: {integrity: sha512-AzmZX6MbAArMsPe+RqrkHD15YSRc+zd9NwosPIN4zDpXoNC8ExD7xpwRsbe+GSfDveOjK3Fd8BFG6Gss/USc2w==}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
-
-  stylelint-config-html@1.1.0:
-    resolution: {integrity: sha512-IZv4IVESjKLumUGi+HWeb7skgO6/g4VMuAYrJdlqQFndgbj6WJAXPhaysvBiXefX79upBdQVumgYcdd17gCpjQ==}
-    engines: {node: ^12 || >=14}
     peerDependencies:
       postcss-html: ^1.0.0
       stylelint: '>=14.0.0'
@@ -5792,11 +5782,6 @@ snapshots:
       postcss-html: 1.7.0
       stylelint: 16.6.1(typescript@5.4.5)
       typescript: 4.9.5
-
-  stylelint-config-html@1.1.0(postcss-html@1.7.0)(stylelint@16.6.1(typescript@5.4.5)):
-    dependencies:
-      postcss-html: 1.7.0
-      stylelint: 16.6.1(typescript@5.4.5)
 
   stylelint-config-idiomatic-order@10.0.0(stylelint@16.6.1(typescript@5.4.5)):
     dependencies:
