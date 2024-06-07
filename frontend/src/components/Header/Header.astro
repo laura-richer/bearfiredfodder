@@ -9,7 +9,13 @@ const { headerNavItems } = Astro.props;
 <header class="header">
   <div class="header__container">
     <a href="#">
-      <img src={bffLogo.src} class="header__logo header__nav-item" alt="Bear Fired Fodder" width="90" height="100"/>
+      <img
+        src={bffLogo.src}
+        class="header__logo header__nav-item"
+        alt="Bear Fired Fodder"
+        width="90"
+        height="100"
+      />
     </a>
 
     <div class="header__nav">
@@ -36,39 +42,7 @@ const { headerNavItems } = Astro.props;
   </div>
 </header>
 
-<script>
-import debounce from 'lodash/debounce';
-import detectBreakpoint from '@/utils/detect-breakpoint';
-import addResizeListener from '@/utils/resize-handler';
-
-const menuButton = document.querySelector('#menuToggleButton');
-const headerNavItemsContainer = document.querySelector('#header__nav-items');
-const headerNavItems = document.querySelectorAll('.header__nav-item');
-const detectScreenSize = 'mobile';
-let mobileBreakpoint = detectBreakpoint(detectScreenSize);
-
-const handleMenuToggle = () => {
-  menuButton.classList.toggle('header__nav-toggle--active');
-  headerNavItemsContainer.classList.toggle('header__nav-items--active');
-};
-
-const handleMenuClose = () => {
-  menuButton.classList.remove('header__nav-toggle--active');
-  headerNavItemsContainer.classList.remove('header__nav-items--active');
-};
-
-const handleResize = debounce(() => {
-  mobileBreakpoint = detectBreakpoint(detectScreenSize);
-}, 300);
-
-headerNavItems.forEach(item => {
-  if (!mobileBreakpoint) return;
-  item.addEventListener('click', handleMenuClose);
-});
-
-menuButton.addEventListener('click', handleMenuToggle);
-addResizeListener(handleResize);
-</script>
+<script src="./header.js"></script>
 
 <style lang="scss" is:global>
   @import '@/scss/resources/breakpoints';
@@ -76,10 +50,10 @@ addResizeListener(handleResize);
   @import '@/scss/resources/hover-state';
 
   .header {
-    background-color: var(--color-black);
     position: fixed;
-    width: 100%;
     z-index: 999;
+    width: 100%;
+    background-color: var(--color-black);
 
     &__container {
       @include container;
@@ -99,10 +73,11 @@ addResizeListener(handleResize);
     }
 
     &__nav-toggle {
-      background-color: transparent;
-      border: none;
       padding: 0;
+      border: none;
+      background-color: transparent;
       cursor: pointer;
+
       @media screen and (min-width: $breakpoint-mobile) {
         display: none;
       }
@@ -111,13 +86,13 @@ addResizeListener(handleResize);
     &__nav-items {
       display: block;
 
-      @media screen and (max-width: calc($breakpoint-mobile - 1px)) {
+      @media screen and (width <= calc($breakpoint-mobile - 1px)) {
         position: absolute;
         top: var(--header-height);
         left: 0;
+        overflow: hidden;
         width: 100vw;
         height: calc(100vh - var(--header-height));
-        overflow: hidden;
         background-color: var(--color-black);
         transform: translateX(-100%);
         transition: transform 0.3s ease;
@@ -148,6 +123,7 @@ addResizeListener(handleResize);
       }
 
       @media screen and (min-width: $breakpoint-mobile) {
+        /* stylelint-disable-next-line declaration-no-important */
         padding: 0 !important;
       }
     }

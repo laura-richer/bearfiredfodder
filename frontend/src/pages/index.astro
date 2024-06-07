@@ -3,12 +3,12 @@ import favicon from '@/assets/favicon.png';
 import '@/scss/global.scss';
 import { getHomePageContent, getHeaderNavItems, getMenuItems } from '@/utils/api.js';
 
-import Header from '@/components/Header.astro';
-import Hero from '@/sections/Hero.astro';
-import About from '@/sections/About.astro';
-import Menu from '@/sections/Menu.astro';
-import Gallery from '@/sections/Gallery.astro';
-import Contact from '@/sections/Contact.astro';
+import Header from '@/components/Header/Header.astro';
+import Hero from '@/sections/Hero/Hero.astro';
+import About from '@/sections/About/About.astro';
+import Menu from '@/sections/Menu/Menu.astro';
+import Gallery from '@/sections/Gallery/Gallery.astro';
+import Contact from '@/sections/Contact/Contact.astro';
 
 const formatHeaderNavItems = headerNavItems => {
   const orderedHeaderNavItems = headerNavItems.sort((a, b) => (a.order > b.order ? 1 : -1));
@@ -90,6 +90,5 @@ const menuItems = await getMenuItems();
 
 <script>
   import detectTouchevents from '@/utils/detect-touchevents';
-
   document.documentElement.classList.add(detectTouchevents() ? 'touchevents' : 'no-touchevents');
 </script>

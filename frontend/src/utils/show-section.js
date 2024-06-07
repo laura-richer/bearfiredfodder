@@ -1,18 +1,20 @@
-const revealElement = targetElement => {
-  const element = targetElement;
+const revealElement = targetElementNode => {
+  const element = targetElementNode;
   element.style.opacity = 1;
   element.style.transform = 'translateY(0)';
 };
 
 export default (targetElement, callback) => {
+  const targetElementNode = document.querySelector(targetElement);
+
   const observer = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           if (callback) callback();
-          revealElement(targetElement);
+          revealElement(targetElementNode);
 
-          observer.unobserve(targetElement);
+          observer.unobserve(targetElementNode);
         }
       });
     },
@@ -21,5 +23,5 @@ export default (targetElement, callback) => {
     }
   );
 
-  observer.observe(targetElement);
+  observer.observe(targetElementNode);
 };

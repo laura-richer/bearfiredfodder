@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets';
 import * as imageHandler from '@/utils/image-handler';
 
 const { title, copy, image, id } = Astro.props;
@@ -17,17 +17,13 @@ const { title, copy, image, id } = Astro.props;
       src={`${imageHandler.getUrl(image)}?w=768&q=80`}
       width={imageHandler.getDimensions(image).width}
       height={imageHandler.getDimensions(image).height}
-      class="about__image-el" alt="Cooking Wood fired pizza"
+      class="about__image-el"
+      alt="Cooking Wood fired pizza"
     />
   </div>
 </section>
 
-<script>
-import showSection from '@/utils/show-section';
-
-const about = document.querySelector('.about__content');
-showSection(about);
-</script>
+<script src="./about.js"></script>
 
 <style lang="scss">
   @import '@/scss/resources/breakpoints';
@@ -67,11 +63,11 @@ showSection(about);
     &__image {
       position: relative;
 
-      &:before {
+      &::before {
         position: absolute;
+        z-index: 99;
         top: -50%;
         bottom: 0;
-        z-index: 99;
         width: 100%;
         height: 50%;
         max-height: 100%;
@@ -81,30 +77,30 @@ showSection(about);
       }
 
       @media screen and (min-width: $breakpoint-mobile) {
-        &:before {
-          height: 25%;
+        &::before {
           top: -25%;
+          height: 25%;
         }
       }
 
       @media screen and (min-width: $breakpoint-tablet) {
         position: absolute;
+        z-index: 50;
         top: 0;
         right: 0;
         bottom: 0;
-        z-index: 50;
         width: 50%;
 
-        &:before {
-          width: 100%;
-          height: 50%;
+        &::before {
           top: auto;
           left: -100%;
+          width: 100%;
+          height: 50%;
         }
 
         &-el {
-          height: 100%;
           width: 100%;
+          height: 100%;
           object-fit: cover;
         }
       }
@@ -112,7 +108,7 @@ showSection(about);
       @media screen and (min-width: $breakpoint-desktop) {
         width: 33%;
 
-        &:before {
+        &::before {
           height: 75%;
         }
       }
