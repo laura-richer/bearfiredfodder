@@ -3,13 +3,13 @@ import Macy from 'macy';
 import detectBreakpoint from '@/utils/detect-breakpoint';
 import showSection from '@/utils/show-section';
 
-const gallery = document.querySelector<HTMLElement>('.gallery');
-const galleryContainer = document.querySelector<HTMLElement>('.gallery__inner');
-const galleryImageWrapper = document.querySelector<HTMLElement>('.gallery__image-wrapper');
-const galleryImages = document.querySelectorAll<HTMLElement>('.gallery__image');
-const galleryLoading = document.querySelector<HTMLElement>('.gallery .loading-spinner');
-const masonaryWrapper = document.querySelector<HTMLElement>('#gallery-masonary-container');
-const loadMoreButton = document.querySelector<HTMLElement>('.gallery__load-more');
+const gallery: HTMLElement = document.querySelector('.gallery');
+const galleryContainer: HTMLElement = document.querySelector('.gallery__inner');
+const galleryImageWrapper: HTMLElement = document.querySelector('.gallery__image-wrapper');
+const galleryImages: NodeListOf<HTMLElement> = document.querySelectorAll('.gallery__image');
+const galleryLoading: HTMLElement = document.querySelector('.gallery .loading-spinner');
+const masonaryWrapper: HTMLElement = document.querySelector('#gallery-masonary-container');
+const loadMoreButton: HTMLElement = document.querySelector('.gallery__load-more');
 const detectScreenSize = 'desktop';
 let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 
@@ -18,7 +18,7 @@ let initialGalleryHeight = 50;
 document.documentElement.style.setProperty('--gallery-height', `${initialGalleryHeight}px`);
 
 const setLoadMoreTotal = () => Math.ceil(masonaryWrapper.clientHeight / initialGalleryHeight);
-let galleryLoadMoreTotal;
+let galleryLoadMoreTotal: number;
 let loadMoreCount = 1;
 
 const handleGalleryLoad = () => {

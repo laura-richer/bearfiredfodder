@@ -1,7 +1,7 @@
 ---
 const { icon, copy, url } = Astro.props;
 
-const getFilenameFromPath = path => /[^/]*$/.exec(path)[0];
+const getFilenameFromPath = (path: string) => /[^/]*$/.exec(path)[0];
 
 const icons = await Astro.glob('../icons/contact/*.astro');
 const requiredIcon = icons.find(

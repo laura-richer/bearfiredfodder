@@ -1,5 +1,6 @@
 ---
 import * as imageHandler from '@/utils/image-handler';
+import { type MenuItemType } from './types.ts';
 
 const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 ---
@@ -20,7 +21,7 @@ const { title, copy, image, mobileImage, menuItems, id } = Astro.props;
 
       <div class="menu__items">
         {
-          menuItems.map(menuItem => (
+          menuItems.map((menuItem: MenuItemType) => (
             <div class="menu__item">
               <h3>
                 {menuItem.title}

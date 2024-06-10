@@ -2,6 +2,7 @@
 import bffLogo from '@/assets/bff-logo.png';
 import IconBurger from '@/icons/IconBurger.astro';
 import Button from '@/components/Button.astro';
+import { type HeaderNavItemType } from './types.ts';
 
 const { headerNavItems } = Astro.props;
 ---
@@ -21,7 +22,7 @@ const { headerNavItems } = Astro.props;
     <div class="header__nav">
       <nav class="header__nav-items" id="header__nav-items">
         {
-          headerNavItems.map(navItem => (
+          headerNavItems.map((navItem: HeaderNavItemType) => (
             <div class="header__nav-list-item header__nav-item">
               <a class="header__nav-link" href={`#${navItem.link}`}>
                 {navItem.name}
