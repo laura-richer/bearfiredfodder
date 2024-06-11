@@ -1,11 +1,12 @@
 import imageUrlBuilder from '@sanity/image-url';
 import sanityClient from '~sanity.config';
+import { type ImageType } from './types';
 
 const builder = imageUrlBuilder(sanityClient);
 
-const getUrl = source => builder.image(source).url();
+const getUrl = (source: ImageType) => builder.image(source).url();
 
-const getDimensions = source => {
+const getDimensions = (source: ImageType) => {
   const {
     asset: { _ref: reference },
   } = source;

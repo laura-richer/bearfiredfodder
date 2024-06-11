@@ -1,4 +1,4 @@
-export default size => {
+export default (size: string) => {
   const breakpoint = getComputedStyle(document.documentElement).getPropertyValue(
     `--breakpoint-${size}`
   );

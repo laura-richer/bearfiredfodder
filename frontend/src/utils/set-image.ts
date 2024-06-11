@@ -1,4 +1,4 @@
-export default (targetElement, mobileBreakpoint) => {
+export default (targetElement: HTMLElement, mobileBreakpoint: boolean) => {
   const {
     dataset: { desktopImage, mobileImage },
   } = targetElement;

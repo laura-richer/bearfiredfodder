@@ -4,7 +4,7 @@ import showSection from '@/utils/show-section';
 import addResizeListener from '@/utils/resize-handler';
 import detectBreakpoint from '@/utils/detect-breakpoint';
 
-const menu = document.querySelector('.menu');
+const menu: HTMLElement = document.querySelector('.menu');
 const detectScreenSize = 'tablet';
 let mobileBreakpoint = detectBreakpoint(detectScreenSize);
 

@@ -4,7 +4,7 @@ import showSection from '@/utils/show-section';
 import addResizeListener from '@/utils/resize-handler';
 import detectBreakpoint from '@/utils/detect-breakpoint';
 
-const heroInner = document.querySelector('.hero__inner');
+const heroInner: HTMLElement = document.querySelector('.hero__inner');
 
 const detectScreenSize = 'tablet';
 let mobileBreakpoint = detectBreakpoint(detectScreenSize);

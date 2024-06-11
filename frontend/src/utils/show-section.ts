@@ -1,11 +1,11 @@
-const revealElement = targetElementNode => {
+const revealElement = (targetElementNode: HTMLElement) => {
   const element = targetElementNode;
-  element.style.opacity = 1;
+  element.style.opacity = '1';
   element.style.transform = 'translateY(0)';
 };
 
-export default (targetElement, callback) => {
-  const targetElementNode = document.querySelector(targetElement);
+export default (targetElement: string, callback?: CallableFunction) => {
+  const targetElementNode: HTMLElement = document.querySelector(targetElement);
 
   const observer = new IntersectionObserver(
     entries => {

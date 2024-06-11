@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: cd frontend && pnpm lint:all
+    typecheck:
+      run: cd frontend && pnpm typecheck
