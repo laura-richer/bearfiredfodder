@@ -74,6 +74,9 @@ const menuItems = await getMenuItems();
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={formattedHomeContent.seo.metaDescription} />
     <title>{formattedHomeContent.seo.metaTitle}</title>
+
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-KC8MGR3Q1H"></script>
+    <script is:inline async src="/js/ga.js"></script>
   </head>
   <body>
     <Header headerNavItems={formattedHeaderNavItems} />
