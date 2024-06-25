@@ -43,6 +43,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.1.6",
     "@sanity/client": "^6.20.0",
     "@sanity/image-url": "^1.0.2",
     "astro": "^3.2.4",
