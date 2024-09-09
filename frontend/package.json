@@ -17,7 +17,7 @@
     "lint:all": "eslint . && stylelint './src/**/*.scss' './src/**/*.astro'"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.7.0",
+    "@astrojs/check": "^0.9.3",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "debounce": "^2.1.0",
@@ -46,7 +46,7 @@
     "@astrojs/sitemap": "^3.1.6",
     "@sanity/client": "^6.20.0",
     "@sanity/image-url": "^1.0.2",
-    "astro": "^3.2.4",
+    "astro": "^4.15.4",
     "macy": "^2.5.1"
   }
 }
